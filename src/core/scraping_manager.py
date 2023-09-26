@@ -1,8 +1,6 @@
 import requests
-
 from bs4 import BeautifulSoup
 from retry import retry
-
 from src.utils.yaml_handler import load_yaml, dump_yaml
 
 
@@ -26,7 +24,7 @@ class Scraper:
 
     def extract_page(self, page: int) -> dict:
         """
-        extract information in page
+        Extract information in page
         """
         # define url
         url = self.base_url.format(page)

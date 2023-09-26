@@ -16,4 +16,3 @@ def dump_yaml(filename: str, data: dict) -> None:
     """
     with open(filename, "w") as f:
         yaml.dump(data, f, default_flow_style=False)
-    return None

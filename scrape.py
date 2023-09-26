@@ -2,10 +2,6 @@ import pandas as pd
 from src.core.scraping_manager import Scraper
 
 
-case_name = "oita"
-max_page = 40
-
-
 def main():
     """
     suumoのベースURLに対して、ページ番号を変えながらスクレイピングを行う
@@ -18,6 +14,6 @@ def main():
 
 
 if __name__ == "__main__":
-    case_name = "oita"
-    max_page = 40
+    case_name = "fukuoka"
+    max_page = 100
     main()

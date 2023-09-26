@@ -42,29 +42,29 @@ class Scraper:
                 # define variable
                 base_data = {}
                 # collect base information
-                base_data["名称"] = (
+                base_data["name"] = (
                     item.find("div", {"class": "cassetteitem_content-title"})
                     .getText()
                     .strip()
                 )
-                base_data["カテゴリー"] = (
+                base_data["category"] = (
                     item.find("div", {"class": "cassetteitem_content-label"})
                     .getText()
                     .strip()
                 )
-                base_data["アドレス"] = (
+                base_data["address"] = (
                     item.find("li", {"class": "cassetteitem_detail-col1"})
                     .getText()
                     .strip()
                 )
-                base_data["アクセス"] = station.getText().strip()
-                base_data["築年数"] = (
+                base_data["access"] = station.getText().strip()
+                base_data["age"] = (
                     item.find("li", {"class": "cassetteitem_detail-col3"})
                     .findAll("div")[0]
                     .getText()
                     .strip()
                 )
-                base_data["構造"] = (
+                base_data["structure"] = (
                     item.find("li", {"class": "cassetteitem_detail-col3"})
                     .findAll("div")[1]
                     .getText()
@@ -76,26 +76,26 @@ class Scraper:
                 )
                 for tbody in tbodys:
                     data = base_data.copy()
-                    data["階数"] = tbody.findAll("td")[2].getText().strip()
-                    data["家賃"] = (
+                    data["story"] = tbody.findAll("td")[2].getText().strip()
+                    data["rent"] = (
                         tbody.findAll("td")[3].findAll("li")[0].getText().strip()
                     )
-                    data["管理費"] = (
+                    data["management_fee"] = (
                         tbody.findAll("td")[3].findAll("li")[1].getText().strip()
                     )
-                    data["敷金"] = (
+                    data["deposit"] = (
                         tbody.findAll("td")[4].findAll("li")[0].getText().strip()
                     )
-                    data["礼金"] = (
+                    data["key_money"] = (
                         tbody.findAll("td")[4].findAll("li")[1].getText().strip()
                     )
-                    data["間取り"] = (
+                    data["layout"] = (
                         tbody.findAll("td")[5].findAll("li")[0].getText().strip()
                     )
-                    data["面積"] = (
+                    data["area"] = (
                         tbody.findAll("td")[5].findAll("li")[1].getText().strip()
                     )
-                    data["URL"] = "https://suumo.jp" + tbody.findAll("td")[8].find(
+                    data["url"] = "https://suumo.jp" + tbody.findAll("td")[8].find(
                         "a"
                     ).get("href")
 

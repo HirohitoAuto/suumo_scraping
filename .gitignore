@@ -1,5 +1,8 @@
 .venv
 .python-version
 
+*__pycache__/
+
 work/
 result/
+temp.py

@@ -1,0 +1,6 @@
+retry
+requests
+beautifulsoup4
+pandas
+pandas
+pandas-profiling

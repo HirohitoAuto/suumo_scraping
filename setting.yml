@@ -1,8 +1,12 @@
 target:
   fukuoka:
     type: rental
-    base_url: https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=090&bs=040&ra=040&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&ek=703577040&rn=7035
+    base_url: https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=090&bs=040&pc=30&smk=&po1=25&po2=99&shkr1=03&shkr2=03&shkr3=03&shkr4=03&rn=7280&ra=040&cb=8.0&ct=9999999&md=07&md=08&md=09&md=10&md=11&md=12&md=13&et=10&mb=0&mt=9999999&cn=9999999&fw2=
 
   oita:
     type: rental
     base_url: https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=090&bs=040&ra=044&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&ek=705077930&rn=7050
+
+  oita_mansion:
+    type: mansion
+    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ta=44&jspIdFlg=patternShikugun&sc=44201&kb=1&kt=9999999&mb=0&mt=9999999&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999&srch_navi=1

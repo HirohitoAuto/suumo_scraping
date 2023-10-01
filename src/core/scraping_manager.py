@@ -27,6 +27,7 @@ class Scraper:
         """
         soup = self._parse_html(url)
         items = soup.findAll("div", {"class": "cassetteitem"})
+        print("items: ", len(items))
         # process each item
         for item in items:
             data_item = {}
@@ -98,6 +99,7 @@ class Scraper:
         """
         soup = self._parse_html(url)
         items = soup.find_all("div", class_="property_unit-content")
+        print("items: ", len(items))
 
         for item in items:
             data_item = {}
@@ -129,6 +131,10 @@ class Scraper:
             dt_tag = item.find("dt", string="築年月")
             if dt_tag:
                 data_item["yyyymm_construction"] = dt_tag.find_next_sibling("dd").text
+            # URL
+            a_tag = item.find("a")
+            if a_tag:
+                data_item["url"] = "https://suumo.jp/" + a_tag["href"]
 
             self.data_all.append(data_item)
 
@@ -139,6 +145,7 @@ class Scraper:
         """
         self.data_all = []
         for page in range(1, max_page + 1):
+            print("\npage: ", page)
             url = self.base_url.format(page)
             if self.type == "rental":
                 self._extract_rental_page(url)

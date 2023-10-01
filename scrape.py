@@ -2,18 +2,17 @@ import pandas as pd
 from src.core.scraping_manager import Scraper
 
 
-def main():
+def scrape_target(case_name: str, max_page: int):
     """
     suumoのベースURLに対して、ページ番号を変えながらスクレイピングを行う
     """
     scraper = Scraper(case_name)
-    for page in range(1, max_page + 1):
-        scraper.extract_page(page)
+    scraper.extract_page(max_page)
     df_all = pd.DataFrame(scraper.data_all)
     df_all.to_csv(f"result/{case_name}.csv", index=False)
 
 
 if __name__ == "__main__":
-    case_name = "fukuoka"
-    max_page = 100
-    main()
+    case_name = "大分_used"
+    max_page = 1
+    scrape_target(case_name, max_page)

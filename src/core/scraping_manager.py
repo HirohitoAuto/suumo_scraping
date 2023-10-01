@@ -9,62 +9,54 @@ class Scraper:
         _filename_setting = "setting.yml"
         _data_setting = load_yaml(_filename_setting)
         self.data_target = _data_setting["target"][case_name]
+        self.type = self.data_target["type"]
         self.base_url = self.data_target["base_url"] + "&page={}"
-        self.data_all = []
-        self.base_data = {}
 
     @retry(tries=3, delay=10, backoff=2)
     def _parse_html(self, url: str):
         """
-        Parse html from url
+        URLのHTMLをパースする
         """
         r = requests.get(url)
         soup = BeautifulSoup(r.content, "html.parser")
         return soup
 
-    def extract_page(self, page: int) -> dict:
+    def _extract_rental_page(self, url: str) -> None:
         """
-        Extract information in page
+        賃貸物件ページの情報を抽出する
         """
-        # define url
-        url = self.base_url.format(page)
-        # get html
         soup = self._parse_html(url)
-        # extract all items
         items = soup.findAll("div", {"class": "cassetteitem"})
-        print("page", page, "items", len(items))
-
         # process each item
         for item in items:
+            data_item = {}
             stations = item.findAll("div", {"class": "cassetteitem_detail-text"})
             # process each station
             for station in stations:
-                # define variable
-                base_data = {}
                 # collect base information
-                base_data["name"] = (
+                data_item["name"] = (
                     item.find("div", {"class": "cassetteitem_content-title"})
                     .getText()
                     .strip()
                 )
-                base_data["category"] = (
+                data_item["category"] = (
                     item.find("div", {"class": "cassetteitem_content-label"})
                     .getText()
                     .strip()
                 )
-                base_data["address"] = (
+                data_item["address"] = (
                     item.find("li", {"class": "cassetteitem_detail-col1"})
                     .getText()
                     .strip()
                 )
-                base_data["access"] = station.getText().strip()
-                base_data["age"] = (
+                data_item["access"] = station.getText().strip()
+                data_item["age"] = (
                     item.find("li", {"class": "cassetteitem_detail-col3"})
                     .findAll("div")[0]
                     .getText()
                     .strip()
                 )
-                base_data["structure"] = (
+                data_item["structure"] = (
                     item.find("li", {"class": "cassetteitem_detail-col3"})
                     .findAll("div")[1]
                     .getText()
@@ -75,7 +67,7 @@ class Scraper:
                     "tbody"
                 )
                 for tbody in tbodys:
-                    data = base_data.copy()
+                    data = data_item.copy()
                     data["story"] = tbody.findAll("td")[2].getText().strip()
                     data["rent"] = (
                         tbody.findAll("td")[3].findAll("li")[0].getText().strip()
@@ -98,5 +90,57 @@ class Scraper:
                     data["url"] = "https://suumo.jp" + tbody.findAll("td")[8].find(
                         "a"
                     ).get("href")
-
                     self.data_all.append(data)
+
+    def _extract_used_page(self, url: str) -> None:
+        """
+        中古物件ページの情報を抽出する
+        """
+        soup = self._parse_html(url)
+        items = soup.find_all("div", class_="property_unit-content")
+
+        for item in items:
+            data_item = {}
+            # 物件名
+            data_item["name"] = (
+                item.find("dd", {"class": "dottable-vm"}).getText().strip()
+            )
+            # 価格
+            data_item["price"] = (
+                item.find("span", {"class": "dottable-value"}).getText().strip()
+            )
+            # 所在地
+            dt_tag = item.find("dt", string="所在地")
+            if dt_tag:
+                data_item["address"] = dt_tag.find_next_sibling("dd").text
+            # 沿線・駅
+            dt_tag = item.find("dt", string="沿線・駅")
+            if dt_tag:
+                data_item["access"] = dt_tag.find_next_sibling("dd").text
+            # 専有面積
+            dt_tag = item.find("dt", string="専有面積")
+            if dt_tag:
+                data_item["area"] = dt_tag.find_next_sibling("dd").text
+            # 間取り
+            dt_tag = item.find("dt", string="間取り")
+            if dt_tag:
+                data_item["layout"] = dt_tag.find_next_sibling("dd").text
+            # 築年月
+            dt_tag = item.find("dt", string="築年月")
+            if dt_tag:
+                data_item["yyyymm_construction"] = dt_tag.find_next_sibling("dd").text
+
+            self.data_all.append(data_item)
+
+    def extract_page(self, max_page: int) -> list:
+        """
+        ページの情報を抽出する
+            type: "rental" or "used"
+        """
+        self.data_all = []
+        for page in range(1, max_page + 1):
+            url = self.base_url.format(page)
+            if self.type == "rental":
+                self._extract_rental_page(url)
+            elif self.type == "used":
+                self._extract_used_page(url)

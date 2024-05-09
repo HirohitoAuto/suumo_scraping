@@ -93,7 +93,7 @@ class Scraper:
                     ).get("href")
                     self.data_all.append(data)
 
-    def _extract_used_page(self, url: str) -> None:
+    def _extract_used_page(self, url: str) -> int:
         """
         中古物件ページの情報を抽出する
         """
@@ -137,6 +137,7 @@ class Scraper:
                 data_item["url"] = "https://suumo.jp/" + a_tag["href"]
 
             self.data_all.append(data_item)
+        return len(items)
 
     def extract_page(self, max_page: int) -> list:
         """
@@ -150,4 +151,6 @@ class Scraper:
             if self.type == "rental":
                 self._extract_rental_page(url)
             elif self.type == "used":
-                self._extract_used_page(url)
+                cnt_items = self._extract_used_page(url)
+                if cnt_items == 0:
+                    break

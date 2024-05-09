@@ -13,6 +13,6 @@ def scrape_target(case_name: str, max_page: int):
 
 
 if __name__ == "__main__":
-    case_name = "福岡_used"
-    max_page = 100
+    case_name = "fukuoka_city"
+    max_page = 10000
     scrape_target(case_name, max_page)

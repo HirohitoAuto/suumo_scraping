@@ -2,16 +2,9 @@ import datetime
 import pandas as pd
 
 
-def format_used(self, df: pd.DataFrame) -> pd.DataFrame:
+def format_data(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Formats the given DataFrame by performing various transformations on the columns.
-
-    Args:
-        df (pd.DataFrame): The DataFrame to be formatted.
-
-    Returns:
-        pd.DataFrame: The formatted DataFrame.
-
+    scrapingしたデータを整形する
     """
     # 金額
     df["price"] = df["price"].str.replace("億円", "0000")
@@ -29,7 +22,6 @@ def format_used(self, df: pd.DataFrame) -> pd.DataFrame:
     df["yyyymm"] = pd.to_datetime(df["yyyymm_construction"], format="%Y年%m月")
     current_year = datetime.datetime.now().year
     df["age"] = current_year - df["yyyymm"].dt.year
-
     # 型変換
     df.dropna(subset=["price", "minutes", "area", "age"], inplace=True)
     df["price"] = df["price"].astype(int)

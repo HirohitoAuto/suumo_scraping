@@ -6,3 +6,6 @@ pandas
 pandas-profiling
 matplotlib
 japanize-matplotlib
+plotly
+nbformat
+statsmodels

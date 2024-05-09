@@ -32,12 +32,12 @@ class Formatter:
         colums = [
             "name",
             "price",
+            "age",
             "line",
             "station_name",
             "minutes",
-            "area",
             "layout",
-            "age",
+            "area",
             "address",
             "url",
         ]

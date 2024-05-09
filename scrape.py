@@ -1,4 +1,6 @@
 import pandas as pd
+
+from src.core.formatter import format_data
 from src.core.scraping_manager import Scraper
 
 
@@ -8,8 +10,10 @@ def scrape_target(case_name: str, max_page: int):
     """
     scraper = Scraper(case_name)
     scraper.extract_page(max_page)
-    df_all = pd.DataFrame(scraper.data_all)
-    df_all.to_csv(f"result/{case_name}.csv", index=False)
+    df = pd.DataFrame(scraper.data_all)
+    df_formatted = format_data(df)
+    df.to_csv(f"result/{case_name}_raw.csv", index=False)
+    df_formatted.to_csv(f"result/{case_name}_formatted.csv", index=False)
 
 
 if __name__ == "__main__":

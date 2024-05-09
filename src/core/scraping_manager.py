@@ -12,6 +12,22 @@ class Scraper:
         self.type = self.data_target["type"]
         self.base_url = self.data_target["base_url"] + "&page={}"
 
+    def extract_page(self, max_page: int) -> list:
+        """
+        ページの情報を抽出する
+            type: "rental" or "used"
+        """
+        self.data_all = []
+        for page in range(1, max_page + 1):
+            print("\npage: ", page)
+            url = self.base_url.format(page)
+            if self.type == "rental":
+                self._extract_rental_page(url)
+            elif self.type == "used":
+                cnt_items = self._extract_used_page(url)
+                if cnt_items == 0:
+                    break
+
     @retry(tries=3, delay=10, backoff=2)
     def _parse_html(self, url: str):
         """
@@ -138,19 +154,3 @@ class Scraper:
 
             self.data_all.append(data_item)
         return len(items)
-
-    def extract_page(self, max_page: int) -> list:
-        """
-        ページの情報を抽出する
-            type: "rental" or "used"
-        """
-        self.data_all = []
-        for page in range(1, max_page + 1):
-            print("\npage: ", page)
-            url = self.base_url.format(page)
-            if self.type == "rental":
-                self._extract_rental_page(url)
-            elif self.type == "used":
-                cnt_items = self._extract_used_page(url)
-                if cnt_items == 0:
-                    break

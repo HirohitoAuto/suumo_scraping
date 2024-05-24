@@ -2,6 +2,7 @@ import pandas as pd
 
 from src.core.formatter import format_data
 from src.core.scraping_manager import Scraper
+import sys
 
 
 def scrape_target(case_name: str, max_page: int):
@@ -17,6 +18,9 @@ def scrape_target(case_name: str, max_page: int):
 
 
 if __name__ == "__main__":
-    case_name = "fukuoka_city"
+    if len(sys.argv) != 2:
+        print("Usage: python scrape.py <case_name> <max_page>")
+        sys.exit(1)
+    case_name = sys.argv[1]
     max_page = 10000
     scrape_target(case_name, max_page)

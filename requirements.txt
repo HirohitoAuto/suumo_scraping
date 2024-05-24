@@ -9,3 +9,4 @@ japanize-matplotlib
 plotly
 nbformat
 statsmodels
+pygwalker

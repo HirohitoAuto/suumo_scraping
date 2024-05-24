@@ -18,3 +18,7 @@ target:
   fukuoka_city:
     type: used
     base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ta=40&jspIdFlg=patternShikugun&sc=40131&sc=40132&sc=40133&sc=40134&sc=40135&sc=40136&sc=40137&kb=1&kt=9999999&mb=0&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999
+
+  nanakuma:
+    type: used
+    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ra=090040&jspIdFlg=patternEki&rn=7285&rnek=728576015&rnek=728576010&rnek=728578810&rnek=728576005&rnek=728539770&rnek=728575995&rnek=728530190&kb=1&kt=9999999&mb=0&md=2&md=3&md=4&ekTjCd=&ekTjNm=&tj=0&et=9999999&cnb=0&cn=9999999

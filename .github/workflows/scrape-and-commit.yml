@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'  # 必要なPythonのバージョンを指定
+        python-version: '3.11.10'  # 必要なPythonのバージョンを指定
 
     - name: Install dependencies
       run: |
@@ -24,7 +24,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run scrape.py
-      run: python scrape.py
+      run: python scrape.py fukuoka_convinient # スクレイピング対象を指定
 
     - name: Create or switch to gh_actions branch
       run: |

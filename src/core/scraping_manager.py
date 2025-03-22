@@ -22,12 +22,9 @@ class Scraper:
         for page in range(1, max_page + 1):
             print("\npage: ", page)
             url = self.base_url.format(page)
-            if self.type == "rental":
-                self._extract_rental_page(url)
-            elif self.type == "used":
-                cnt_items = self._extract_used_page(url)
-                if cnt_items == 0:
-                    break
+            cnt_items = self._extract_used_page(url)
+            if cnt_items == 0:
+                break
 
     @retry(tries=3, delay=10, backoff=2)
     def _parse_html(self, url: str):
@@ -37,78 +34,6 @@ class Scraper:
         r = requests.get(url)
         soup = BeautifulSoup(r.content, "html.parser")
         return soup
-
-    def _extract_rental_page(self, url: str) -> None:
-        """
-        賃貸物件ページの情報を抽出する
-        """
-        soup = self._parse_html(url)
-        items = soup.findAll("div", {"class": "cassetteitem"})
-        print("items: ", len(items))
-        # process each item
-        for item in items:
-            data_item = {}
-            stations = item.findAll("div", {"class": "cassetteitem_detail-text"})
-            # process each station
-            for station in stations:
-                # collect base information
-                data_item["name"] = (
-                    item.find("div", {"class": "cassetteitem_content-title"})
-                    .getText()
-                    .strip()
-                )
-                data_item["category"] = (
-                    item.find("div", {"class": "cassetteitem_content-label"})
-                    .getText()
-                    .strip()
-                )
-                data_item["address"] = (
-                    item.find("li", {"class": "cassetteitem_detail-col1"})
-                    .getText()
-                    .strip()
-                )
-                data_item["access"] = station.getText().strip()
-                data_item["age"] = (
-                    item.find("li", {"class": "cassetteitem_detail-col3"})
-                    .findAll("div")[0]
-                    .getText()
-                    .strip()
-                )
-                data_item["structure"] = (
-                    item.find("li", {"class": "cassetteitem_detail-col3"})
-                    .findAll("div")[1]
-                    .getText()
-                    .strip()
-                )
-                # process for each room
-                tbodys = item.find("table", {"class": "cassetteitem_other"}).findAll(
-                    "tbody"
-                )
-                for tbody in tbodys:
-                    data = data_item.copy()
-                    data["story"] = tbody.findAll("td")[2].getText().strip()
-                    data["rent"] = (
-                        tbody.findAll("td")[3].findAll("li")[0].getText().strip()
-                    )
-                    data["management_fee"] = (
-                        tbody.findAll("td")[3].findAll("li")[1].getText().strip()
-                    )
-                    data["deposit"] = (
-                        tbody.findAll("td")[4].findAll("li")[0].getText().strip()
-                    )
-                    data["key_money"] = (
-                        tbody.findAll("td")[4].findAll("li")[1].getText().strip()
-                    )
-                    data["layout"] = (
-                        tbody.findAll("td")[5].findAll("li")[0].getText().strip()
-                    )
-                    data["area"] = (
-                        tbody.findAll("td")[5].findAll("li")[1].getText().strip()
-                    )
-                    data["url"] = "https://suumo.jp" + tbody.findAll("td")[8].find(
-                        "a"
-                    ).get("href")
-                    self.data_all.append(data)
 
     def _extract_used_page(self, url: str) -> int:
         """

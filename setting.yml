@@ -1,32 +1,6 @@
 target:
-  福岡_rental:
-    type: rental
-    base_url: https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=090&bs=040&pc=30&smk=&po1=25&po2=99&shkr1=03&shkr2=03&shkr3=03&shkr4=03&rn=7280&ra=040&cb=8.0&ct=9999999&md=07&md=08&md=09&md=10&md=11&md=12&md=13&et=10&mb=0&mt=9999999&cn=9999999&fw2=
-
-  大分_rental:
-    type: rental
-    base_url: https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=090&bs=040&ra=044&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&ek=705077930&rn=7050
-
-  大分_used:
-    type: used
-    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ta=44&jspIdFlg=patternShikugun&sc=44201&kb=1&kt=9999999&mb=0&mt=9999999&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999
-
-  福岡_used:
-    type: used
-    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ta=40&jspIdFlg=patternShikugun&sc=40131&sc=40132&sc=40133&sc=40134&sc=40135&sc=40136&sc=40137&kb=1&kt=9999999&mb=0&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999&srch_navi=1
-  
-  fukuoka_city:
-    type: used
-    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ta=40&jspIdFlg=patternShikugun&sc=40131&sc=40132&sc=40133&sc=40134&sc=40135&sc=40136&sc=40137&kb=1&kt=9999999&mb=0&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999
-
-  nanakuma:
-    type: used
-    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ra=090040&jspIdFlg=patternEki&rn=7285&rnek=728576015&rnek=728576010&rnek=728578810&rnek=728576005&rnek=728539770&rnek=728575995&rnek=728530190&kb=1&kt=9999999&mb=0&md=2&md=3&md=4&ekTjCd=&ekTjNm=&tj=0&et=9999999&cnb=0&cn=9999999
-
-  airport_line:
-    type: used
-    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ra=090040&jspIdFlg=patternEki&rn=7280&ekiEnsen=7280&rnek=728039080&rnek=728039000&rnek=728033890&rnek=728028850&rnek=728025720&rnek=728006260&rnek=728000310&rnek=728025370&rnek=728027120&rnek=728010650&rnek=728030190&rnek=728032270&rnek=728033640&kb=1&kt=9999999&mb=0&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999
-  
   fukuoka_nov_2024:
-    type: used
     base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ra=090040&jspIdFlg=patternEki&rn=7280&rnek=728033890&rnek=728028850&rnek=728025720&rnek=728006260&rnek=728000310&rnek=728025370&rnek=728027120&rnek=728010650&rnek=728030190&rnek=728032270&rn=7285&rnek=728576015&rnek=728576010&rnek=728578810&rnek=728576005&rnek=728539770&rnek=728576000&rnek=728575995&rnek=728575993&rnek=728530190&kb=1&kt=9999999&mb=0&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999
+
+  fukuoka_convinient:
+    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ra=090040&jspIdFlg=patternEki&rn=7280&rnek=728033890&rnek=728028850&rnek=728025720&rnek=728006260&rnek=728000310&rnek=728025370&rnek=728027120&rnek=728010650&rnek=728030190&rnek=728032270&rnek=728033640&rn=7285&rnek=728576015&rnek=728576010&rnek=728578810&rnek=728576005&rnek=728539770&rnek=728576000&rnek=728575995&rnek=728575993&rnek=728530190&kb=1&kt=9999999&mb=0&ekTjCd=&ekTjNm=&tj=0&et=15&cnb=0&cn=9999999

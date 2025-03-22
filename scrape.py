@@ -6,7 +6,7 @@ from src.core.formatter import format_data
 from src.core.scraping_manager import Scraper
 
 
-def scrape_target(case_name: str, max_page: int):
+def scrape_target(case_name: str, max_page: int = 10000):
     """
     suumoのベースURLに対して、ページ番号を変えながらスクレイピングを行う
     """
@@ -20,8 +20,7 @@ def scrape_target(case_name: str, max_page: int):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python scrape.py <case_name> <max_page>")
+        print("Usage: python scrape.py <case_name>")
         sys.exit(1)
     case_name = sys.argv[1]
-    max_page = 10000
-    scrape_target(case_name, max_page)
+    scrape_target(case_name)

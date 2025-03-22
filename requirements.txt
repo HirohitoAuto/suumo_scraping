@@ -2,7 +2,6 @@ retry
 requests
 beautifulsoup4
 pandas
-pandas
 pandas-profiling
 matplotlib
 japanize-matplotlib
@@ -10,3 +9,4 @@ plotly
 nbformat
 statsmodels
 pygwalker
+python-dateutil

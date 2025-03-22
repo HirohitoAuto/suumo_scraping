@@ -1,9 +1,16 @@
+import os
 import sys
+from datetime import datetime
 
 import pandas as pd
+from dateutil import tz
 
 from src.core.formatter import format_data
 from src.core.scraping_manager import Scraper
+
+jst = tz.gettz("Asia/Tokyo")
+now_jst = datetime.now(jst)
+yyyymmdd = int(now_jst.strftime("%Y%m%d"))
 
 
 def scrape(case_name: str, max_page: int = 10000) -> pd.DataFrame:
@@ -41,7 +48,13 @@ if __name__ == "__main__":
 
     # スクレイピング
     df_raw = scrape(case_name)
-    df_raw.to_csv(f"result/{case_name}_raw.csv", index=False)
+    dir_raw = f"data/{case_name}/lake"
+    os.makedirs(dir_raw, exist_ok=True)
+    filename_lake = os.path.join(dir_raw, f"lake_{yyyymmdd}.csv")
+    df_raw.to_csv(filename_lake, index=False)
     # スクレイピング結果を整形
     df_formatted = format(df_raw)
-    df_formatted.to_csv(f"result/{case_name}_formatted.csv", index=False)
+    dir_formatted = f"data/{case_name}/formatted"
+    os.makedirs(dir_formatted, exist_ok=True)
+    filename_lake = os.path.join(dir_formatted, f"formatted_{yyyymmdd}.csv")
+    df_formatted.to_csv(filename_lake, index=False)

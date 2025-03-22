@@ -10,7 +10,6 @@ class Scraper:
         _filename_setting = "setting.yml"
         _data_setting = load_yaml(_filename_setting)
         self.data_target = _data_setting["target"][case_name]
-        self.type = self.data_target["type"]
         self.base_url = self.data_target["base_url"] + "&page={}"
 
     def extract_page(self, max_page: int) -> list:

@@ -26,3 +26,7 @@ target:
   airport_line:
     type: used
     base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ra=090040&jspIdFlg=patternEki&rn=7280&ekiEnsen=7280&rnek=728039080&rnek=728039000&rnek=728033890&rnek=728028850&rnek=728025720&rnek=728006260&rnek=728000310&rnek=728025370&rnek=728027120&rnek=728010650&rnek=728030190&rnek=728032270&rnek=728033640&kb=1&kt=9999999&mb=0&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999
+  
+  fukuoka_nov_2024:
+    type: used
+    base_url: https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=090&bs=011&ra=090040&jspIdFlg=patternEki&rn=7280&rnek=728033890&rnek=728028850&rnek=728025720&rnek=728006260&rnek=728000310&rnek=728025370&rnek=728027120&rnek=728010650&rnek=728030190&rnek=728032270&rn=7285&rnek=728576015&rnek=728576010&rnek=728578810&rnek=728576005&rnek=728539770&rnek=728576000&rnek=728575995&rnek=728575993&rnek=728530190&kb=1&kt=9999999&mb=0&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999

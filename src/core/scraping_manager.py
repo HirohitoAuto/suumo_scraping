@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 from retry import retry
-from src.utils.yaml_handler import load_yaml, dump_yaml
+
+from src.utils.yaml_handler import load_yaml
 
 
 class Scraper:

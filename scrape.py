@@ -1,8 +1,9 @@
+import sys
+
 import pandas as pd
 
 from src.core.formatter import format_data
 from src.core.scraping_manager import Scraper
-import sys
 
 
 def scrape_target(case_name: str, max_page: int):

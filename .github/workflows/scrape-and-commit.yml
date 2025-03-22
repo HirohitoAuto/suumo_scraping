@@ -24,7 +24,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run scrape.py
-      run: python scrape.py
+      run: python scrape.py fukuoka_convinient # スクレイピング対象を指定
 
     - name: Create or switch to gh_actions branch
       run: |

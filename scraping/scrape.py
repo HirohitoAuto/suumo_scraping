@@ -50,11 +50,11 @@ if __name__ == "__main__":
     df_raw = scrape(case_name)
     dir_raw = f"data/{case_name}/lake"
     os.makedirs(dir_raw, exist_ok=True)
-    filename_lake = os.path.join(dir_raw, f"lake_{yyyymmdd}.csv")
+    filename_lake = os.path.join(dir_raw, f"{yyyymmdd}.csv")
     df_raw.to_csv(filename_lake, index=False)
     # スクレイピング結果を整形
     df_formatted = format(df_raw)
     dir_formatted = f"data/{case_name}/formatted"
     os.makedirs(dir_formatted, exist_ok=True)
-    filename_lake = os.path.join(dir_formatted, f"formatted_{yyyymmdd}.csv")
+    filename_lake = os.path.join(dir_formatted, f"{yyyymmdd}.csv")
     df_formatted.to_csv(filename_lake, index=False)

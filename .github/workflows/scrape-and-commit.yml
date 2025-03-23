@@ -20,11 +20,14 @@ jobs:
 
     - name: Install dependencies
       run: |
+        cd scraping
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Run scrape.py
-      run: python scrape.py fukuoka_convinient # スクレイピング対象を指定
+      run: |
+        cd scraping
+        python scrape.py fukuoka_convinient
 
     - name: Pull main branch
       run: |
@@ -36,7 +39,7 @@ jobs:
       run: |
         git config --local user.name "github-actions[bot]"
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git add data/*.csv
+        git add scraping/data/*.csv
         git diff --quiet && git diff --staged --quiet || git commit -m "Update CSV data"
         git push origin main
       env:

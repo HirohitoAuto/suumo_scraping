@@ -24,7 +24,9 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run scrape.py
-      run: python scrape.py fukuoka_convinient # スクレイピング対象を指定
+      run: |
+        cd scraping
+        python scrape.py fukuoka_convinient
 
     - name: Pull main branch
       run: |

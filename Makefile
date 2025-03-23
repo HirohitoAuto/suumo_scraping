@@ -5,5 +5,5 @@ run:
 	docker run -it \
 		-p 8501:8501 \
 		-v ./streamlit/:/usr/streamlit \
-		-v ./data/:/usr/streamlit/data \
+		-v ./scraping/data/:/usr/streamlit/data \
 		suumo_streamlit bash

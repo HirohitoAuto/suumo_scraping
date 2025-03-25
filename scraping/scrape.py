@@ -4,7 +4,6 @@ from datetime import datetime
 
 import pandas as pd
 from dateutil import tz
-
 from src.core.formatter import format_data
 from src.core.scraping_manager import Scraper
 
@@ -13,7 +12,7 @@ now_jst = datetime.now(jst)
 yyyymmdd = int(now_jst.strftime("%Y%m%d"))
 
 
-def scrape(case_name: str, max_page: int = 10000) -> pd.DataFrame:
+def scrape(case_name: str, max_page: int = 1) -> pd.DataFrame:
     """suumoのベースURLに対してスクレイピングを行い、結果をcsvファイルに保存する
 
     Args:

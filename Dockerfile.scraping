@@ -1,0 +1,9 @@
+FROM python:3.11-slim-buster
+
+RUN apt-get update && \
+    apt-get install -y sudo gcc
+
+WORKDIR /usr/scraping
+
+COPY scraping/requirements.txt .
+RUN pip install -U pip && pip install -r requirements.txt

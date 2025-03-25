@@ -4,7 +4,6 @@ from datetime import datetime
 
 import pandas as pd
 from dateutil import tz
-
 from src.core.formatter import format_data
 from src.core.scraping_manager import Scraper
 

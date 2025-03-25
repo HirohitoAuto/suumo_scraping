@@ -1,4 +1,5 @@
 import datetime
+import re
 
 import pandas as pd
 
@@ -29,8 +30,12 @@ def format_data(df: pd.DataFrame) -> pd.DataFrame:
     df["minutes"] = df["minutes"].astype(int)
     df["area"] = df["area"].astype(float)
     df["age"] = df["age"].astype(int)
-
+    # idの付与 urlの末尾からidを取得
+    df["id"] = df["url"].apply(
+        lambda x: re.search(r"nc_(\d+)/", x).group(1) if isinstance(x, str) else None
+    )
     colums = [
+        "id",
         "name",
         "price",
         "age",

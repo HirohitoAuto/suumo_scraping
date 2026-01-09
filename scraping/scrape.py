@@ -57,3 +57,4 @@ if __name__ == "__main__":
     os.makedirs(dir_formatted, exist_ok=True)
     filename_lake = os.path.join(dir_formatted, f"{yyyymmdd}.csv")
     df_formatted.to_csv(filename_lake, index=False)
+    # grouping処理を行う

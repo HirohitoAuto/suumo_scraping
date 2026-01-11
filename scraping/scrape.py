@@ -7,6 +7,7 @@ from dateutil import tz
 from src.core.formatter import format_data
 from src.core.grouping import group_by_properties
 from src.core.scraping_manager import Scraper
+from src.utils.gcp_spreadsheet import GcpSpreadSheet
 
 jst = tz.gettz("Asia/Tokyo")
 now_jst = datetime.now(jst)
@@ -40,6 +41,16 @@ def main():
         df_formatted, group_cols=["name", "price", "age", "layout", "area"]
     )
     _output_csv(df_grouped.sort_values("id"), f"data/{case_name}/grouped")
+
+    # Google Spreadsheetを更新
+    spreadsheet = GcpSpreadSheet(
+        key="1cg1pxdcvjM4PUjGloCSTGrofmXEWvu_IREJ1SuN5VQY",  # スプレッドシートID
+        filename_credentials="credentials.json",
+    )
+    spreadsheet.dump_dataframe(
+        df=df_grouped.sort_values("id"),
+        sheet_name="latest",
+    )
 
 
 if __name__ == "__main__":

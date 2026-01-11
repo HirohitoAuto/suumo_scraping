@@ -24,10 +24,18 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Set up GCP credentials
+      run: |
+        echo '${{ secrets.GCP_CREDENTIALS }}' > scraping/credentials.json
+      env:
+        GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+
     - name: Run scrape.py
       run: |
         cd scraping
         python scrape.py fukuoka_convinient
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: credentials.json
 
     - name: Pull main branch
       run: |

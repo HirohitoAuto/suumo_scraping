@@ -2,60 +2,60 @@ name: Scrape and Commit
 
 on:
   schedule:
-    - cron: '0 0 * * 1'  # 毎週月曜日の0時に実行
-  workflow_dispatch:  # 手動実行を可能にするトリガー
+    - cron: "0 0 * * 1" # 毎週月曜日の0時に実行
+  workflow_dispatch: # 手動実行を可能にするトリガー
 
 jobs:
   scrape_and_commit:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11.10'  # 必要なPythonのバージョンを指定
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11.10" # 必要なPythonのバージョンを指定
 
-    - name: Install dependencies
-      run: |
-        cd scraping
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          cd scraping
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Set up GCP credentials
-      run: |
-        echo '${{ secrets.GCP_CREDENTIALS }}' > scraping/credentials.json
-      env:
-        GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      - name: Set up GCP credentials
+        run: |
+          echo '${{ secrets.GCP_CREDENTIALS }}' > scraping/credentials.json
+        env:
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
 
-    - name: Run scrape.py for fukuoka_convinient
-    # 人気駅。GoogleSpreadSheetには反映しない
-      run: |
-        cd scraping
-        python scrape.py fukuoka_convinient --skip-spreadsheet
+      - name: Run scrape.py for fukuoka_convinient
+        # 人気駅。GoogleSpreadSheetには反映しない
+        run: |
+          cd scraping
+          python scrape.py fukuoka_convinient --skip-spreadsheet
 
-    - name: Run scrape.py for fukuoka_major_station
-    # 主要駅。GoogleSpreadSheetに反映する
-      run: |
-        cd scraping
-        python scrape.py fukuoka_major_station
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: credentials.json
+      - name: Run scrape.py for fukuoka_major_station
+        # 主要駅。GoogleSpreadSheetに反映する
+        run: |
+          cd scraping
+          python scrape.py fukuoka_major_station
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: credentials.json
 
-    - name: Pull main branch
-      run: |
-        git fetch origin
-        git checkout main
-        git pull
+      - name: Pull main branch
+        run: |
+          git fetch origin
+          git checkout main
+          git pull
 
-    - name: Commit and push changes
-      run: |
-        git config --local user.name "github-actions[bot]"
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git add scraping/data/*.csv
-        git diff --quiet && git diff --staged --quiet || git commit -m "Update CSV data"
-        git push origin main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add scraping/data/*.csv
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update CSV data"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

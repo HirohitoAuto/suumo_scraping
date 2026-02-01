@@ -1,5 +1,5 @@
+import argparse
 import os
-import sys
 from datetime import datetime
 
 import pandas as pd
@@ -21,10 +21,18 @@ def _output_csv(df: pd.DataFrame, dir_path: str) -> None:
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python scrape.py <case_name>")
-        sys.exit(1)
-    case_name = sys.argv[1]
+    parser = argparse.ArgumentParser(
+        description="Scrape SUUMO data and optionally update Google Spreadsheet"
+    )
+    parser.add_argument("case_name", help="Case name for scraping")
+    parser.add_argument(
+        "--skip-spreadsheet",
+        action="store_true",
+        help="Skip updating Google Spreadsheet",
+    )
+    args = parser.parse_args()
+
+    case_name = args.case_name
 
     # スクレイピング
     scraper = Scraper(case_name)
@@ -43,14 +51,16 @@ def main():
     _output_csv(df_grouped.sort_values("id"), f"data/{case_name}/grouped")
 
     # Google Spreadsheetを更新
-    spreadsheet = GcpSpreadSheet(
-        key="1cg1pxdcvjM4PUjGloCSTGrofmXEWvu_IREJ1SuN5VQY",  # スプレッドシートID
-        filename_credentials="credentials.json",
-    )
-    spreadsheet.dump_dataframe(
-        df=df_grouped.sort_values("id"),
-        sheet_name="latest",
-    )
+    if not args.skip_spreadsheet:
+        print("Updating Google Spreadsheet...")
+        spreadsheet = GcpSpreadSheet(
+            key="1cg1pxdcvjM4PUjGloCSTGrofmXEWvu_IREJ1SuN5VQY",  # スプレッドシートID
+            filename_credentials="credentials.json",
+        )
+        spreadsheet.dump_dataframe(
+            df=df_grouped.sort_values("id"),
+            sheet_name="latest",
+        )
 
 
 if __name__ == "__main__":

@@ -75,9 +75,9 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 77553274,オープンレジデンシア博多住吉,4190,3,地下鉄七隈線,櫛田神社前,6,1LDK,38.65,福岡県福岡市博多区住吉２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_77553274/
 77560141,サヴォイ　グランデヴィル,6800,18,地下鉄七隈線,櫛田神社前,6,3LDK,80.18,福岡県福岡市博多区博多駅前３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_77560141/
 77560355,シャンボール第２平尾,1850,45,西鉄天神大牟田線,薬院,11,2LDK,71.0,福岡県福岡市中央区平尾２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77560355/
-77561710,ライオンズマンション大濠パークサイド,1180,23,地下鉄空港線,唐人町,11,3LDK,105.51,福岡県福岡市中央区鳥飼２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77561710/
+77561710,ライオンズマンション大濠パークサイド,10180,23,地下鉄空港線,唐人町,11,3LDK,105.51,福岡県福岡市中央区鳥飼２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77561710/
 77582014,ハイツ城西,1580,52,地下鉄空港線,西新,5,1LDK,48.51,福岡県福岡市早良区城西１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_77582014/
-77583529,グランドメゾン百道プレイス,1820,10,地下鉄空港線,藤崎,3,3LDK,90.65,福岡県福岡市早良区百道２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_77583529/
+77583529,グランドメゾン百道プレイス,10820,10,地下鉄空港線,藤崎,3,3LDK,90.65,福岡県福岡市早良区百道２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_77583529/
 77585206,ロイヤルマンション別府6,3898,32,地下鉄七隈線,別府,6,4LDK,81.19,福岡県福岡市城南区別府６,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashijonan/nc_77585206/
 77596228,エンゼルハイム大濠公園南,4290,36,地下鉄七隈線,別府,4,3LDK,69.03,福岡県福岡市城南区鳥飼６,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashijonan/nc_77596228/
 77605697,CLUB THE. 薬院ステーションタワー,46000,6,地下鉄七隈線,薬院,2,2LDK+S（納戸）,138.16,福岡県福岡市中央区白金１-17-34,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77605697/
@@ -114,7 +114,7 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 77794350,ライオンズマンションマキシム桜坂II,4480,28,地下鉄七隈線,桜坂,5,3LDK,85.78,福岡県福岡市中央区谷１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77794350/
 77795131,ファミール輝国,1580,42,地下鉄七隈線,六本松,14,3LDK,68.0,福岡県福岡市中央区輝国２-8-20,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77795131/
 77800156,ロイヤルマンション別府6,3898,32,地下鉄七隈線,別府,7,4LDK,81.19,福岡県福岡市城南区別府６,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashijonan/nc_77800156/
-77805133,コアマンションけやき通りプレジオ,1980,24,地下鉄七隈線,六本松,10,3LDK,133.37,福岡県福岡市中央区赤坂３-４－２２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77805133/
+77805133,コアマンションけやき通りプレジオ,10980,24,地下鉄七隈線,六本松,10,3LDK,133.37,福岡県福岡市中央区赤坂３-４－２２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77805133/
 77817947,ブライト・サンリヤン藤崎二丁目,7490,14,地下鉄空港線,藤崎,9,4LDK,105.88,福岡県福岡市早良区藤崎２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_77817947/
 77821582,ハイライフ平尾,2690,49,地下鉄七隈線,薬院大通,14,1LDK,57.13,福岡県福岡市中央区平尾４-7-17,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77821582/
 77825635,トーカンマンション六本松,5280,30,地下鉄七隈線,六本松,3,3LDK,74.74,福岡県福岡市中央区六本松４,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_77825635/
@@ -186,13 +186,13 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 78108711,KBCマンションユーハイム百道,3850,40,地下鉄空港線,藤崎,6,3LDK,83.47,福岡県福岡市早良区百道１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_78108711/
 78110277,南薬院パークマンション,5480,41,地下鉄七隈線,薬院大通,5,2LDK+S（納戸）,81.58,福岡県福岡市中央区薬院２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78110277/
 78112179,オープンレジデンシア渡辺通,6490,5,地下鉄七隈線,渡辺通,6,2LDK,66.02,福岡県福岡市中央区清川１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78112179/
-78116650,百道タワー,1980,22,地下鉄空港線,西新,13,3LDK,108.68,福岡県福岡市早良区百道浜１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_78116650/
+78116650,百道タワー,10980,22,地下鉄空港線,西新,13,3LDK,108.68,福岡県福岡市早良区百道浜１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_78116650/
 78118520,パークハイツ桜坂,1780,49,地下鉄七隈線,桜坂,4,3LDK,67.2,福岡県福岡市中央区桜坂３-12-78,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78118520/
 78120475,パーク・サンリヤン博多の森3番館,3350,21,地下鉄空港線,福岡空港,14,3LDK,75.95,福岡県糟屋郡志免町別府西２,https://suumo.jp//ms/chuko/fukuoka/sc_kasuyagunshime/nc_78120475/
 78120519,パークレオ大濠,12500,25,地下鉄空港線,唐人町,10,3LDK+S（納戸）,105.61,福岡県福岡市中央区大濠１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78120519/
 78121626,スワローハイツ山荘通,3290,40,地下鉄七隈線,薬院大通,15,3LDK,76.93,福岡県福岡市中央区平尾４-21-10,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78121626/
 78123276,グランドメゾン福岡Ｔｈｅ　Ｃｅｎｔｒａｌ　Ｌｕｘｅ,9300,1,西鉄天神大牟田線,薬院,2,1LDK,62.25,福岡県福岡市中央区渡辺通２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78123276/
-78123277,グランドメゾン福岡Ｔｈｅ　Ｃｅｎｔｒａｌ　Ｌｕｘｅ,1900,1,西鉄天神大牟田線,薬院,2,1LDK,69.63,福岡県福岡市中央区渡辺通２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78123277/
+78123277,グランドメゾン福岡Ｔｈｅ　Ｃｅｎｔｒａｌ　Ｌｕｘｅ,10900,1,西鉄天神大牟田線,薬院,2,1LDK,69.63,福岡県福岡市中央区渡辺通２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78123277/
 78134338,ＣＬＵＢ　ＴＨＥ．平尾駅前,5790,4,地下鉄七隈線,薬院,13,2LDK,55.17,福岡県福岡市中央区平尾２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78134338/
 78135127,オープンレジデンシア渡辺通南,3850,2,地下鉄七隈線,渡辺通,10,1LDK,38.25,福岡県福岡市中央区清川２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78135127/
 78138210,西新ビル,1670,54,地下鉄空港線,藤崎,5,2LDK,60.8,福岡県福岡市早良区高取１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_78138210/
@@ -292,7 +292,7 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 78433515,浄水グランドコーポ,3599,51,地下鉄七隈線,薬院大通,8,3LDK,82.28,福岡県福岡市中央区浄水通,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78433515/
 78439167,コスモ博多古門戸,4799,23,地下鉄箱崎線,中洲川端,9,1LDK+S（納戸）,54.49,福岡県福岡市博多区古門戸町,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_78439167/
 78440045,ザ・パークハウス福岡タワーズＥＡＳＴ,16500,6,地下鉄空港線,唐人町,12,3LDK,102.56,福岡県福岡市中央区地行浜２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78440045/
-78440079,ライオンズマンション大濠パークサイド,1180,23,地下鉄空港線,唐人町,10,3LDK,105.51,福岡県福岡市中央区鳥飼２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78440079/
+78440079,ライオンズマンション大濠パークサイド,10180,23,地下鉄空港線,唐人町,10,3LDK,105.51,福岡県福岡市中央区鳥飼２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78440079/
 78443297,コスモ博多古門戸,4799,23,地下鉄空港線,中洲川端,8,1LDK+S（納戸）,54.49,福岡県福岡市博多区古門戸町10-5,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_78443297/
 78446171,ハイライフ大濠,2980,44,地下鉄七隈線,六本松,9,2LDK,67.41,福岡県福岡市中央区草香江２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78446171/
 78448005,サンポートハイツ,2150,52,地下鉄空港線,大濠公園,8,1LDK,70.17,福岡県福岡市中央区港２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78448005/
@@ -414,7 +414,7 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 78652446,第参参プリンスマンション城南,3390,40,地下鉄七隈線,別府,2,2LDK,65.65,福岡県福岡市城南区別府１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashijonan/nc_78652446/
 78653597,グランディア百道浜通り,4590,20,地下鉄空港線,西新,9,2LDK,68.66,福岡県福岡市早良区西新２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_78653597/
 78659975,ニューアイランド大名マンション,2380,47,地下鉄空港線,赤坂,7,4DK,57.51,福岡県福岡市中央区大名１-12-36,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78659975/
-78660361,ザ・パークハウス福岡タワーズWEST,1800,7,地下鉄空港線,唐人町,12,2LDK,90.35,福岡県福岡市中央区地行浜２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78660361/
+78660361,ザ・パークハウス福岡タワーズWEST,10800,7,地下鉄空港線,唐人町,12,2LDK,90.35,福岡県福岡市中央区地行浜２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78660361/
 78661055,グランドメゾン福岡　Ｔｈｅ　Ｃｅｎｔｒａｌ　Ｌｕｘｅ,9980,1,西鉄天神大牟田線,薬院,2,1LDK,63.29,福岡県福岡市中央区渡辺通２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78661055/
 78663215,ライオンズマンション鳥飼,2280,47,地下鉄七隈線,別府,8,2LDK,62.92,福岡県福岡市城南区鳥飼６-15-33,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashijonan/nc_78663215/
 78666531,カーサ第2博多,2197,45,地下鉄七隈線,渡辺通,10,2LDK,53.86,福岡県福岡市博多区住吉２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_78666531/
@@ -635,7 +635,7 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 78924081,シーサイドももちヴェルデコート５番館,6480,35,地下鉄空港線,藤崎,12,3LDK,93.67,福岡県福岡市早良区百道浜３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_78924081/
 78927453,モントーレ東比恵クレア,4499,7,地下鉄空港線,東比恵,2,1LDK,42.77,福岡県福岡市博多区東比恵３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_78927453/
 78928142,パークホームズ警固本通り,8300,17,地下鉄空港線,赤坂,9,3LDK,82.96,福岡県福岡市中央区警固２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78928142/
-78928466,ネクサス薬院,1580,11,地下鉄七隈線,薬院大通,4,3LDK,78.92,福岡県福岡市中央区薬院１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78928466/
+78928466,ネクサス薬院,10580,11,地下鉄七隈線,薬院大通,4,3LDK,78.92,福岡県福岡市中央区薬院１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78928466/
 78928558,ニューライフ薬院,3190,40,西鉄天神大牟田線,薬院,3,1LDK+S（納戸）,47.29,福岡県福岡市中央区薬院１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78928558/
 78928748,プレミスト西新,7500,15,地下鉄空港線,西新,10,2LDK,73.31,福岡県福岡市早良区西新６,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_78928748/
 78928794,カーサ大濠,2380,52,地下鉄七隈線,六本松,7,1LDK,51.66,福岡県福岡市中央区六本松３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_78928794/
@@ -859,7 +859,7 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 79074334,グランドメゾン浄水ガーデンシティフォレストゲートⅢ,12500,8,地下鉄七隈線,薬院大通,5,3LDK,83.15,福岡県福岡市中央区薬院４,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79074334/
 79074337,地行パーク・マンション,4280,33,地下鉄空港線,唐人町,7,3LDK,70.12,福岡県福岡市中央区地行２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79074337/
 79074339,ＭＪＲ博多ザ・レジデンス,12000,1,ＪＲ鹿児島本線,博多,12,3LDK,97.26,福岡県福岡市博多区美野島１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_79074339/
-79076400,コアマンション桜坂プレジオヒルズ,1980,25,地下鉄七隈線,桜坂,1,3LDK,132.88,福岡県福岡市中央区桜坂３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79076400/
+79076400,コアマンション桜坂プレジオヒルズ,10980,25,地下鉄七隈線,桜坂,1,3LDK,132.88,福岡県福岡市中央区桜坂３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79076400/
 79076927,クリオラベルヴィ呉服町,3599,8,地下鉄空港線,中洲川端,12,1LDK,34.4,福岡県福岡市博多区下呉服町3-19,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_79076927/
 79077176,赤坂エクセル207号,3599,52,地下鉄空港線,赤坂,12,2LDK,79.5,福岡県福岡市中央区赤坂３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79077176/
 79079645,シティマンション薬院,3380,42,地下鉄七隈線,薬院大通,3,2LDK,56.22,福岡県福岡市中央区薬院１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79079645/
@@ -918,7 +918,7 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 79104475,赤坂エクセル,3599,52,地下鉄空港線,赤坂,12,2LDK,79.5,福岡県福岡市中央区赤坂３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79104475/
 79104930,サントーア薬院,5780,31,地下鉄七隈線,薬院大通,3,2LDK,73.35,福岡県福岡市中央区薬院２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79104930/
 79104931,グランドメゾン別府レジデンス,8780,2,地下鉄七隈線,別府,1,3LDK,80.37,福岡県福岡市城南区別府３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashijonan/nc_79104931/
-79104938,プレミスト天神赤坂タワー,2500,7,地下鉄空港線,赤坂,2,3LDK,95.25,福岡県福岡市中央区大名２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79104938/
+79104938,プレミスト天神赤坂タワー,20500,7,地下鉄空港線,赤坂,2,3LDK,95.25,福岡県福岡市中央区大名２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79104938/
 79104940,赤坂エクセル,3599,52,地下鉄空港線,赤坂,12,2LDK,79.5,福岡県福岡市中央区赤坂３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79104940/
 79104941,コモダス天神,5180,29,地下鉄七隈線,薬院大通,5,3LDK,58.3,福岡県福岡市中央区今泉２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79104941/
 79104949,博多駅前ビル,3480,52,地下鉄空港線,博多,6,2LDK,79.26,福岡県福岡市博多区博多駅前１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_79104949/
@@ -927,7 +927,7 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 79107350,パーク・サンリヤン博多の森Ⅵ番館,3799,14,地下鉄空港線,福岡空港,11,4LDK,95.8,福岡県糟屋郡志免町別府西２-23-4,https://suumo.jp//ms/chuko/fukuoka/sc_kasuyagunshime/nc_79107350/
 79107636,ライオンズプラザ大濠公園,5980,31,地下鉄空港線,唐人町,6,3LDK,66.63,福岡県福岡市中央区荒戸３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79107636/
 79107639,サングレート薬院駅ロイヤルウィン,7780,23,地下鉄七隈線,薬院,4,4LDK,79.56,福岡県福岡市中央区平尾１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79107639/
-79107641,グランドメゾン大濠プレイス,1500,14,地下鉄七隈線,六本松,11,2LDK+S（納戸）,88.05,福岡県福岡市中央区鳥飼１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79107641/
+79107641,グランドメゾン大濠プレイス,10500,14,地下鉄七隈線,六本松,11,2LDK+S（納戸）,88.05,福岡県福岡市中央区鳥飼１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79107641/
 79108337,デュ・レジア薬院テラス,6490,4,地下鉄七隈線,薬院,11,2LDK,63.0,福岡県福岡市中央区高砂２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79108337/
 79109621,大濠ハイツ,1840,49,地下鉄七隈線,六本松,10,3LDK,71.28,福岡県福岡市中央区六本松３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79109621/
 79109642,オープンレジデンシア室見,3098,1,地下鉄空港線,藤崎,15,1LDK,33.64,福岡県福岡市西区愛宕２,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashinishi/nc_79109642/
@@ -946,7 +946,7 @@ id,name,price,age,line,station_name,minutes,layout,area,address,url
 79118516,ネクサス薬院,13500,11,地下鉄七隈線,薬院大通,3,3LDK,94.52,福岡県福岡市中央区薬院１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79118516/
 79118520,エンクレストベイサイド通り,4699,10,地下鉄箱崎線,中洲川端,14,1LDK,54.02,福岡県福岡市博多区築港本町,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_79118520/
 79118919,ラフィネシャトードゥ赤坂,1780,24,地下鉄空港線,赤坂,8,ワンルーム,24.3,福岡県福岡市中央区大手門１-3-31,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashichuo/nc_79118919/
-79120367,グランドメゾン西新レジデンス,1980,11,地下鉄空港線,西新,6,3LDK,105.84,福岡県福岡市早良区西新２-1-42,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_79120367/
+79120367,グランドメゾン西新レジデンス,10980,11,地下鉄空港線,西新,6,3LDK,105.84,福岡県福岡市早良区西新２-1-42,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_79120367/
 79120715,グランド・ルー城南区役所前　リフォーム済　ペット飼育…,4235,26,地下鉄七隈線,別府,2,3LDK,65.31,福岡県福岡市城南区別府３-4-30,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashijonan/nc_79120715/
 79121075,百道タワー,9980,22,地下鉄空港線,西新,10,2LDK,81.73,福岡県福岡市早良区百道浜１,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashisawara/nc_79121075/
 79121106,博多ニッコーハイツ,1830,47,地下鉄空港線,博多,10,3LDK,62.91,福岡県福岡市博多区博多駅東３,https://suumo.jp//ms/chuko/fukuoka/sc_fukuokashihakata/nc_79121106/

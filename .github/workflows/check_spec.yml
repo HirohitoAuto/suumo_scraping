@@ -1,0 +1,26 @@
+name: Check Runner Specs
+on: [push, workflow_dispatch]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check CPU
+        run: |
+          echo "--- CPU Info ---"
+          lscpu | grep -E "Model name|CPU\(s\):|Thread"
+
+      - name: Check Memory
+        run: |
+          echo "--- Memory Info ---"
+          free -h
+
+      - name: Check Disk
+        run: |
+          echo "--- Disk Info ---"
+          df -h /
+
+      - name: Check OS
+        run: |
+          echo "--- OS Info ---"
+          lsb_release -a

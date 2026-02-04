@@ -12,30 +12,9 @@ class Scraper:
         self.data_target = _data_setting["target"][case_name]
         self.base_url = self.data_target["base_url"] + "&page={}"
 
-    def extract_page(self, max_page: int) -> None:
-        """全ページの情報を抽出してDataFrameに格納する
-
-        Args:
-            max_page (int): 最大ページ数
-
-        Returns:
-            None
-        """
-        data_all_pages = []
-        for page in range(1, max_page + 1):
-            print("\npage: ", page)
-            url = self.base_url.format(page)
-            data_page = self._extract_used_page(url)
-            if len(data_page) == 0:
-                break
-            data_all_pages.extend(data_page)
-        self.df_lake = pd.DataFrame(data_all_pages)
-
     @retry(tries=3, delay=10, backoff=2)
     def _parse_html(self, url: str):
-        """
-        URLのHTMLをパースする
-        """
+        """URLのHTMLをパースする"""
         r = requests.get(url)
         soup = BeautifulSoup(r.content, "html.parser")
         return soup
@@ -92,3 +71,22 @@ class Scraper:
             # itemのデータを追加
             data_page.append(data_item)
         return data_page
+
+    def extract_page(self, max_page: int) -> None:
+        """全ページの情報を抽出してDataFrameに格納する
+
+        Args:
+            max_page (int): 最大ページ数
+
+        Returns:
+            None
+        """
+        data_all_pages = []
+        for page in range(1, max_page + 1):
+            print("\npage: ", page)
+            url = self.base_url.format(page)
+            data_page = self._extract_used_page(url)
+            if len(data_page) == 0:
+                break
+            data_all_pages.extend(data_page)
+        self.df_lake = pd.DataFrame(data_all_pages)

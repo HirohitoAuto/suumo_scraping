@@ -4,8 +4,9 @@ from datetime import datetime
 
 import pandas as pd
 from dateutil import tz
-from scraping_manager import Scraper
-from src.utils.gcp_spreadsheet import GcpSpreadSheet
+
+from .scraping_manager import Scraper
+from .src.utils.gcp_spreadsheet import GcpSpreadSheet
 
 jst = tz.gettz("Asia/Tokyo")
 now_jst = datetime.now(jst)
@@ -13,6 +14,11 @@ yyyymmdd = int(now_jst.strftime("%Y%m%d"))
 
 
 def _output_csv(df: pd.DataFrame, dir_path: str) -> None:
+    # 相対パスの場合、スクリプトのディレクトリを基準に解決
+    if not os.path.isabs(dir_path):
+        script_dir = os.path.dirname(__file__)
+        dir_path = os.path.join(script_dir, dir_path)
+
     os.makedirs(dir_path, exist_ok=True)
     filename = os.path.join(dir_path, f"{yyyymmdd}.csv")
     df.to_csv(filename, index=False)

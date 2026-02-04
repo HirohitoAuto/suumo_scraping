@@ -1,15 +1,18 @@
+import os
+
 import duckdb
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from retry import retry
-from src.core.formatter import format_data
-from src.utils.yaml_handler import load_yaml
+
+from .src.core.formatter import format_data
+from .src.utils.yaml_handler import load_yaml
 
 
 class Scraper:
     def __init__(self, case_name: str) -> None:
-        _filename_setting = "setting.yml"
+        _filename_setting = os.path.join(os.path.dirname(__file__), "setting.yml")
         _data_setting = load_yaml(_filename_setting)
         self.data_target = _data_setting["target"][case_name]
         self.base_url = self.data_target["base_url"] + "&page={}"

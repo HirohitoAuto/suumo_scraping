@@ -4,9 +4,9 @@ from datetime import datetime
 
 import pandas as pd
 from dateutil import tz
+from scraping_manager import Scraper
 from src.core.formatter import format_data
 from src.core.grouping import group_by_properties
-from src.core.scraping_manager import Scraper
 from src.utils.gcp_spreadsheet import GcpSpreadSheet
 
 jst = tz.gettz("Asia/Tokyo")
@@ -36,12 +36,11 @@ def main():
 
     # スクレイピング
     scraper = Scraper(case_name)
-    scraper.extract_page(max_page=10000)
-    df_raw = pd.DataFrame(scraper.data_all)
-    _output_csv(df_raw, f"data/{case_name}/lake")
+    scraper.extract_page(max_page=1000)
+    _output_csv(scraper.df_lake, f"data/{case_name}/lake")
 
     # スクレイピング結果を整形
-    df_formatted = format_data(df_raw)
+    df_formatted = format_data(scraper.df_lake)
     _output_csv(df_formatted.sort_values("id"), f"data/{case_name}/formatted")
 
     # grouping処理を行う

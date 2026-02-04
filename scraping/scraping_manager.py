@@ -1,7 +1,7 @@
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from retry import retry
-
 from src.utils.yaml_handler import load_yaml
 
 
@@ -12,18 +12,24 @@ class Scraper:
         self.data_target = _data_setting["target"][case_name]
         self.base_url = self.data_target["base_url"] + "&page={}"
 
-    def extract_page(self, max_page: int) -> list:
+    def extract_page(self, max_page: int) -> None:
+        """全ページの情報を抽出してDataFrameに格納する
+
+        Args:
+            max_page (int): 最大ページ数
+
+        Returns:
+            None
         """
-        ページの情報を抽出する
-            type: "rental" or "used"
-        """
-        self.data_all = []
+        data_all_pages = []
         for page in range(1, max_page + 1):
             print("\npage: ", page)
             url = self.base_url.format(page)
-            cnt_items = self._extract_used_page(url)
-            if cnt_items == 0:
+            data_page = self._extract_used_page(url)
+            if len(data_page) == 0:
                 break
+            data_all_pages.extend(data_page)
+        self.df_lake = pd.DataFrame(data_all_pages)
 
     @retry(tries=3, delay=10, backoff=2)
     def _parse_html(self, url: str):
@@ -34,14 +40,20 @@ class Scraper:
         soup = BeautifulSoup(r.content, "html.parser")
         return soup
 
-    def _extract_used_page(self, url: str) -> int:
-        """
-        中古物件ページの情報を抽出する
+    def _extract_used_page(self, url: str) -> list:
+        """中古物件ページの情報を抽出してリストで返す
+
+        Args:
+            url (str): 対象ページのURL
+
+        Returns:
+            list: 抽出したデータのリスト
         """
         soup = self._parse_html(url)
         items = soup.find_all("div", class_="property_unit-content")
         print("items: ", len(items))
 
+        data_page = []
         for item in items:
             data_item = {}
             # 物件名
@@ -77,5 +89,6 @@ class Scraper:
             if a_tag:
                 data_item["url"] = "https://suumo.jp/" + a_tag["href"]
 
-            self.data_all.append(data_item)
-        return len(items)
+            # itemのデータを追加
+            data_page.append(data_item)
+        return data_page

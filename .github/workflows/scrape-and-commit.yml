@@ -35,12 +35,12 @@ jobs:
         run: |
           python -m scraping fukuoka_convinient --skip-spreadsheet
 
-      - name: Run scrape.py for fukuoka_major_station
-        # 主要駅。GoogleSpreadSheetに反映する
-        run: |
-          python -m scraping fukuoka_major_station
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: scraping/credentials.json
+      # - name: Run scrape.py for fukuoka_major_station
+      #   # 主要駅。GoogleSpreadSheetに反映する
+      #   run: |
+      #     python -m scraping fukuoka_major_station
+      #   env:
+      #     GOOGLE_APPLICATION_CREDENTIALS: scraping/credentials.json
 
       - name: Pull main branch
         run: |

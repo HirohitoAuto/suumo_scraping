@@ -11,12 +11,12 @@ from .src.utils.gcp_spreadsheet import GcpSpreadSheet
 jst = tz.gettz("Asia/Tokyo")
 now_jst = datetime.now(jst)
 yyyymmdd = int(now_jst.strftime("%Y%m%d"))
+script_dir = os.path.dirname(__file__)
 
 
 def _output_csv(df: pd.DataFrame, dir_path: str) -> None:
     # 相対パスの場合、スクリプトのディレクトリを基準に解決
     if not os.path.isabs(dir_path):
-        script_dir = os.path.dirname(__file__)
         dir_path = os.path.join(script_dir, dir_path)
 
     os.makedirs(dir_path, exist_ok=True)
@@ -54,9 +54,10 @@ def main():
     # Google Spreadsheetを更新
     if not args.skip_spreadsheet:
         print("Updating Google Spreadsheet...")
+        filename_credentials = os.path.join(script_dir, "credentials.json")
         spreadsheet = GcpSpreadSheet(
             key="1cg1pxdcvjM4PUjGloCSTGrofmXEWvu_IREJ1SuN5VQY",  # スプレッドシートID
-            filename_credentials="credentials.json",
+            filename_credentials=filename_credentials,
         )
         spreadsheet.dump_dataframe(
             df=scraper.df_grouped.sort_values("id"),

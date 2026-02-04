@@ -54,13 +54,16 @@ def main():
     # Google Spreadsheetを更新
     if not args.skip_spreadsheet:
         print("Updating Google Spreadsheet...")
+        # dfにタイムスタンプのカラムを追加
+        df_gss = scraper.df_grouped.sort_values("id").copy()
+        df_gss["updated_at"] = now_jst.strftime("%Y-%m-%d %H:%M:%S")
         filename_credentials = os.path.join(script_dir, "credentials.json")
         spreadsheet = GcpSpreadSheet(
             key="1cg1pxdcvjM4PUjGloCSTGrofmXEWvu_IREJ1SuN5VQY",  # スプレッドシートID
             filename_credentials=filename_credentials,
         )
         spreadsheet.dump_dataframe(
-            df=scraper.df_grouped.sort_values("id"),
+            df=df_gss,
             sheet_name="latest",
         )
 

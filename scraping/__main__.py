@@ -4,10 +4,9 @@ from datetime import datetime
 
 import pandas as pd
 from dateutil import tz
-from src.core.formatter import format_data
-from src.core.grouping import group_by_properties
-from src.core.scraping_manager import Scraper
-from src.utils.gcp_spreadsheet import GcpSpreadSheet
+
+from .scraping_manager import Scraper
+from .src.utils.gcp_spreadsheet import GcpSpreadSheet
 
 jst = tz.gettz("Asia/Tokyo")
 now_jst = datetime.now(jst)
@@ -15,6 +14,11 @@ yyyymmdd = int(now_jst.strftime("%Y%m%d"))
 
 
 def _output_csv(df: pd.DataFrame, dir_path: str) -> None:
+    # 相対パスの場合、スクリプトのディレクトリを基準に解決
+    if not os.path.isabs(dir_path):
+        script_dir = os.path.dirname(__file__)
+        dir_path = os.path.join(script_dir, dir_path)
+
     os.makedirs(dir_path, exist_ok=True)
     filename = os.path.join(dir_path, f"{yyyymmdd}.csv")
     df.to_csv(filename, index=False)
@@ -36,19 +40,16 @@ def main():
 
     # スクレイピング
     scraper = Scraper(case_name)
-    scraper.extract_page(max_page=10000)
-    df_raw = pd.DataFrame(scraper.data_all)
-    _output_csv(df_raw, f"data/{case_name}/lake")
+    scraper.extract_page(max_page=1000)
+    _output_csv(scraper.df_lake, f"data/{case_name}/lake")
 
     # スクレイピング結果を整形
-    df_formatted = format_data(df_raw)
-    _output_csv(df_formatted.sort_values("id"), f"data/{case_name}/formatted")
+    scraper.format_data()
+    _output_csv(scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted")
 
     # grouping処理を行う
-    df_grouped = group_by_properties(
-        df_formatted, group_cols=["name", "price", "age", "layout", "area"]
-    )
-    _output_csv(df_grouped.sort_values("id"), f"data/{case_name}/grouped")
+    scraper.remove_replications(group_cols=["name", "price", "age", "layout", "area"])
+    _output_csv(scraper.df_grouped.sort_values("id"), f"data/{case_name}/grouped")
 
     # Google Spreadsheetを更新
     if not args.skip_spreadsheet:
@@ -58,7 +59,7 @@ def main():
             filename_credentials="credentials.json",
         )
         spreadsheet.dump_dataframe(
-            df=df_grouped.sort_values("id"),
+            df=scraper.df_grouped.sort_values("id"),
             sheet_name="latest",
         )
 

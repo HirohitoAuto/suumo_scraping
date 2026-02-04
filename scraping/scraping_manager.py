@@ -1,9 +1,9 @@
+import duckdb
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from retry import retry
 from src.core.formatter import format_data
-from src.core.grouping import group_by_properties
 from src.utils.yaml_handler import load_yaml
 
 
@@ -106,11 +106,19 @@ class Scraper:
 
     def remove_replications(self, group_cols: list[str]) -> None:
         """重複物件を排除したDataFrameを作成する
-
+            同じ物件が別IDで登録されており、統計値に与える悪影響を排除するために必要。
         Args:
             group_cols (list[str]): Group byするカラム名のリスト
 
         Returns:
             None
         """
-        self.df_grouped = group_by_properties(self.df_formatted, group_cols)
+        df_formatted = self.df_formatted
+        group_cols_sql = ", ".join(group_cols)
+        query = f"""
+        with valid_ids as (select min(id) as id from df_formatted group by {group_cols_sql})
+        select *
+        from df_formatted
+        where id in (select id from valid_ids)
+        """
+        self.df_grouped = duckdb.query(query).to_df()

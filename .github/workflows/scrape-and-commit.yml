@@ -30,10 +30,10 @@ jobs:
         env:
           GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
 
-      # - name: Run scrape.py for fukuoka_convinient
-      #   # 人気駅。GoogleSpreadSheetには反映しない
-      #   run: |
-      #     python -m scraping fukuoka_convinient --skip-spreadsheet
+      - name: Run scrape.py for fukuoka_convinient
+        # 人気駅。GoogleSpreadSheetには反映しない
+        run: |
+          python -m scraping fukuoka_convinient --skip-spreadsheet
 
       - name: Run scrape.py for fukuoka_major_station
         # 主要駅。GoogleSpreadSheetに反映する

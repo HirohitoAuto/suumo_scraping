@@ -5,7 +5,6 @@ from datetime import datetime
 import pandas as pd
 from dateutil import tz
 from scraping_manager import Scraper
-from src.core.formatter import format_data
 from src.core.grouping import group_by_properties
 from src.utils.gcp_spreadsheet import GcpSpreadSheet
 
@@ -40,12 +39,12 @@ def main():
     _output_csv(scraper.df_lake, f"data/{case_name}/lake")
 
     # スクレイピング結果を整形
-    df_formatted = format_data(scraper.df_lake)
-    _output_csv(df_formatted.sort_values("id"), f"data/{case_name}/formatted")
+    scraper.format_data()
+    _output_csv(scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted")
 
     # grouping処理を行う
     df_grouped = group_by_properties(
-        df_formatted, group_cols=["name", "price", "age", "layout", "area"]
+        scraper.df_formatted, group_cols=["name", "price", "age", "layout", "area"]
     )
     _output_csv(df_grouped.sort_values("id"), f"data/{case_name}/grouped")
 

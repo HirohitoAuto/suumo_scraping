@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from retry import retry
+from src.core.formatter import format_data
 from src.utils.yaml_handler import load_yaml
 
 
@@ -90,3 +91,7 @@ class Scraper:
                 break
             data_all_pages.extend(data_page)
         self.df_lake = pd.DataFrame(data_all_pages)
+
+    def format_data(self) -> None:
+        """スクレイピングしたデータを整形する"""
+        self.df_formatted = format_data(self.df_lake)

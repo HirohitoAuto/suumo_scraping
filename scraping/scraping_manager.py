@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from retry import retry
 from src.core.formatter import format_data
+from src.core.grouping import group_by_properties
 from src.utils.yaml_handler import load_yaml
 
 
@@ -93,5 +94,23 @@ class Scraper:
         self.df_lake = pd.DataFrame(data_all_pages)
 
     def format_data(self) -> None:
-        """スクレイピングしたデータを整形する"""
+        """スクレイピングしたデータを整形したDataFrameを作成する
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         self.df_formatted = format_data(self.df_lake)
+
+    def remove_replications(self, group_cols: list[str]) -> None:
+        """重複物件を排除したDataFrameを作成する
+
+        Args:
+            group_cols (list[str]): Group byするカラム名のリスト
+
+        Returns:
+            None
+        """
+        self.df_grouped = group_by_properties(self.df_formatted, group_cols)

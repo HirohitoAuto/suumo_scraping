@@ -5,7 +5,6 @@ from datetime import datetime
 import pandas as pd
 from dateutil import tz
 from scraping_manager import Scraper
-from src.core.grouping import group_by_properties
 from src.utils.gcp_spreadsheet import GcpSpreadSheet
 
 jst = tz.gettz("Asia/Tokyo")
@@ -43,10 +42,8 @@ def main():
     _output_csv(scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted")
 
     # grouping処理を行う
-    df_grouped = group_by_properties(
-        scraper.df_formatted, group_cols=["name", "price", "age", "layout", "area"]
-    )
-    _output_csv(df_grouped.sort_values("id"), f"data/{case_name}/grouped")
+    scraper.remove_replications(group_cols=["name", "price", "age", "layout", "area"])
+    _output_csv(scraper.df_grouped.sort_values("id"), f"data/{case_name}/grouped")
 
     # Google Spreadsheetを更新
     if not args.skip_spreadsheet:
@@ -56,7 +53,7 @@ def main():
             filename_credentials="credentials.json",
         )
         spreadsheet.dump_dataframe(
-            df=df_grouped.sort_values("id"),
+            df=scraper.df_grouped.sort_values("id"),
             sheet_name="latest",
         )
 

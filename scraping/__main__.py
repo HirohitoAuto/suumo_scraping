@@ -43,20 +43,19 @@ def main():
 
     case_name = args.case_name
 
-    # スクレイピング
     scraper = Scraper(case_name)
-    scraper.extract_page(max_page=1000)
+    scraper.extract_page(max_page=1000)  # スクレイピング
+    scraper.format_data()  # スクレイピング結果を整形
+    scraper.remove_replications(
+        group_cols=["name", "price", "age", "layout", "area"]
+    )  # grouping処理を行う
+
+    # 結果データフレームをcsvに保存
     if not args.skip_csv_storing:
         _output_csv(scraper.df_lake, f"data/{case_name}/lake")
-
-    # スクレイピング結果を整形
-    scraper.format_data()
-    if not args.skip_csv_storing:
-        _output_csv(scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted")
-
-    # grouping処理を行う
-    scraper.remove_replications(group_cols=["name", "price", "age", "layout", "area"])
-    if not args.skip_csv_storing:
+        _output_csv(
+            scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted"
+        )
         _output_csv(scraper.df_grouped.sort_values("id"), f"data/{case_name}/grouped")
 
     # Google Spreadsheetを更新

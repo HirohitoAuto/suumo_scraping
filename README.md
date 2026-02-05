@@ -32,7 +32,6 @@ suumo_scraping/
 │       └── utils/        # ユーティリティ
 │           ├── gcp_spreadsheet.py     # GCP Spreadsheet連携
 │           └── yaml_handler.py        # YAML設定読込
-├── analysis/            # Jupyter ノートブック
 ├── Dockerfile.scraping
 └── Makefile
 ```

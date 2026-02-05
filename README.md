@@ -23,7 +23,8 @@ suumo_scraping/
 ├── scraping/              # スクレイピング関連のコード
 │   ├── __main__.py       # メインエントリーポイント
 │   ├── scraping_manager.py  # スクレイピング管理
-│   ├── requirements.txt   # Python依存関係
+│   ├── pyproject.toml   # Python依存関係（uv用）
+│   ├── requirements.txt   # Python依存関係（従来のpip用、参考）
 │   ├── setting.yml       # スクレイピング設定
 │   ├── credentials.json  # GCP認証情報
 │   └── src/
@@ -41,6 +42,7 @@ suumo_scraping/
 ### 前提条件
 
 - Python 3.11以上
+- uv（パッケージマネージャー）
 - GCP認証情報（Google Spreadsheet連携を使用する場合）
 
 ### インストール
@@ -51,13 +53,25 @@ git clone <repository-url>
 cd suumo_scraping
 ```
 
-2. 依存パッケージのインストール
+2. uvのインストール（まだインストールしていない場合）
 ```bash
-cd scraping
-pip install -r requirements.txt
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# または pipx を使用
+pipx install uv
 ```
 
-3. GCP認証情報の設定（Google Spreadsheet連携を使用する場合）
+3. 依存パッケージのインストール
+```bash
+cd scraping
+uv pip install .
+```
+
+4. GCP認証情報の設定（Google Spreadsheet連携を使用する場合）
 ```bash
 # credentials.jsonをscraping/ディレクトリに配置
 cp /path/to/your/credentials.json scraping/credentials.json
@@ -104,7 +118,7 @@ SUUMOのWebサイトから中古マンション物件情報をスクレイピン
 ```bash
 # 依存パッケージのインストール
 cd scraping
-pip install -r requirements.txt
+uv pip install .
 
 # 基本実行（CSVとGoogle Spreadsheetに保存）
 python -m scraping <case_name>

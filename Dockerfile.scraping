@@ -1,9 +1,15 @@
 FROM python:3.11-slim-bullseye
 
 RUN apt-get update && \
-    apt-get install -y sudo gcc
+    apt-get install -y sudo gcc curl
 
 WORKDIR /usr/scraping
 
-COPY scraping/requirements.txt .
-RUN pip install -U pip && pip install -r requirements.txt
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+# Copy project files
+COPY scraping/pyproject.toml .
+
+# Install dependencies with uv
+RUN uv pip install --system --no-cache .

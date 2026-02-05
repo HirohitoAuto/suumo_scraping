@@ -9,48 +9,39 @@ SUUMO（スーモ）の物件情報をスクレイピングし、データ分析
 - **スクレイピング**: SUUMOのWebサイトから物件情報を自動取得
 - **データ整形**: 取得したデータをクリーニング・整形
 - **分析**: Pythonノートブックによるデータ分析
-- **可視化**: Streamlitを使った対話型ダッシュボード
+- **自動実行**: GitHub Actionsによる週次自動スクレイピング
 
 ## プロジェクト構造
 
 ```
 suumo_scraping/
+├── .github/              # GitHub Actions ワークフロー
+│   └── workflows/
+│       ├── weekly-csv-update.yml      # 週次CSVデータ更新
+│       ├── scrape-and-commit.yml      # 週次スクレイピング＆コミット
+│       └── check_spec.yml             # ランナースペック確認
 ├── scraping/              # スクレイピング関連のコード
-│   ├── scrape.py         # メインのスクレイピングスクリプト
+│   ├── __main__.py       # メインエントリーポイント
+│   ├── scraping_manager.py  # スクレイピング管理
 │   ├── requirements.txt   # Python依存関係
 │   ├── setting.yml       # スクレイピング設定
 │   ├── credentials.json  # GCP認証情報
 │   └── src/
 │       ├── core/         # コアロジック
-│       │   ├── scraping_manager.py    # スクレイピング管理
-│       │   ├── formatter.py           # データ整形
-│       │   └── grouping.py            # データグループ化
+│       │   └── formatter.py           # データ整形
 │       └── utils/        # ユーティリティ
 │           ├── gcp_spreadsheet.py     # GCP Spreadsheet連携
 │           └── yaml_handler.py        # YAML設定読込
-│   └── data/             # スクレイピングデータ保存先
-│       ├── airport_line/
-│       ├── fukuoka_convinient/
-│       └── nanakuma/
-├── streamlit/            # Streamlitダッシュボード
-│   ├── app.py           # メインアプリケーション
-│   └── requirements.txt
 ├── analysis/            # Jupyter ノートブック
-│   ├── airport_line.ipynb
-│   ├── fukuoka_nov_2024.ipynb
-│   └── nanakuma.ipynb
 ├── Dockerfile.scraping
-├── Dockerfile.streamlit
-├── Makefile
-└── README.md
+└── Makefile
 ```
 
 ## セットアップ
 
 ### 前提条件
 
-- Docker & Docker Compose
-- Python 3.8以上
+- Python 3.11以上
 - GCP認証情報（Google Spreadsheet連携を使用する場合）
 
 ### インストール
@@ -61,16 +52,77 @@ git clone <repository-url>
 cd suumo_scraping
 ```
 
-2. 環境変数を設定（必要に応じて）
+2. 依存パッケージのインストール
 ```bash
-export CASE_NAME="福岡_便利"
+cd scraping
+pip install -r requirements.txt
 ```
 
-## 使用方法
+3. GCP認証情報の設定（Google Spreadsheet連携を使用する場合）
+```bash
+# credentials.jsonをscraping/ディレクトリに配置
+cp /path/to/your/credentials.json scraping/credentials.json
+```
 
-### スクレイピングの実行
+## `.github/` - GitHub Actions ワークフロー
 
-#### Dockerを使用する場合（推奨）
+このリポジトリには以下のGitHub Actionsワークフローが設定されています：
+
+### weekly-csv-update.yml
+- **実行タイミング**: 毎週月曜日 0:00 (UTC) / 手動実行可能
+- **処理内容**: `fukuoka_convinient` のデータをスクレイピングしCSVファイルとして保存（Google Spreadsheetには反映しない）
+- **自動コミット**: CSVデータの更新を自動的にmainブランチにコミット
+
+### scrape-and-commit.yml
+- **実行タイミング**: 毎週月曜日 0:00 (UTC) / 手動実行可能
+- **処理内容**: 
+  - `fukuoka_convinient`: CSVのみ保存
+  - `fukuoka_major_station`: CSVとGoogle Spreadsheetに保存
+- **自動コミット**: CSVデータの更新を自動的にmainブランチにコミット
+
+### check_spec.yml
+- **実行タイミング**: pushまたは手動実行
+- **処理内容**: GitHub Actionsランナーのスペック（CPU、メモリ、ディスク、OS）を確認
+
+## `scraping/` - スクレイピング処理
+
+### 処理概要
+
+SUUMOのWebサイトから中古マンション物件情報をスクレイピングし、データを取得・整形・保存します。
+
+**処理フロー**:
+1. **データ取得**: 指定されたURLから物件情報をスクレイピング
+2. **データ整形**: 取得したデータをクリーニング・型変換
+3. **重複除去**: 同じ物件の重複データを排除
+4. **保存**: CSVファイルとして保存（オプションでGoogle Spreadsheetにも保存）
+
+**設定ファイル**: `scraping/setting.yml` に各ケース（`fukuoka_convinient`、`fukuoka_major_station`等）の検索条件URLが定義されています。
+
+### 実行方法
+
+#### ローカルで実行する場合
+
+```bash
+# 依存パッケージのインストール
+cd scraping
+pip install -r requirements.txt
+
+# 基本実行（CSVとGoogle Spreadsheetに保存）
+python -m scraping <case_name>
+
+# CSVのみ保存（Google Spreadsheet更新をスキップ）
+python -m scraping <case_name> --skip-spreadsheet
+
+# Google Spreadsheetのみ更新（CSV保存をスキップ）
+python -m scraping <case_name> --skip-csv-storing
+```
+
+**利用可能なcase_name**:
+- `fukuoka_convinient`: 便利な駅から徒歩15分以内の物件
+- `fukuoka_major_station`: 主要駅から徒歩15分以内の物件
+- `fukuoka_nov_2024`: その他の検索条件
+
+#### Dockerを使用する場合
 
 ```bash
 # イメージのビルド
@@ -80,7 +132,7 @@ make build_scraping
 make run_scraping
 
 # コンテナ内でスクレイピング実行
-python scrape.py <case_name> 
+python -m scraping <case_name>
 ```
 
 ## ダッシュボード

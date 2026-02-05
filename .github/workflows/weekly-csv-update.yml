@@ -8,6 +8,8 @@ on:
 jobs:
   csv_update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required for committing and pushing changes
 
     steps:
       - name: Checkout repository

@@ -1,0 +1,40 @@
+name: Daily Spreadsheet Update
+
+on:
+  schedule:
+    - cron: "0 1 * * *" # 毎日10時(JST)に実行 (UTC 1:00)
+  workflow_dispatch: # 手動実行を可能にするトリガー
+
+jobs:
+  spreadsheet_update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11.10" # 必要なPythonのバージョンを指定
+
+      - name: Install dependencies
+        run: |
+          cd scraping
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Set up GCP credentials
+        run: |
+          echo '${{ secrets.GCP_CREDENTIALS }}' > scraping/credentials.json
+        env:
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Run scraping for fukuoka_major_station with spreadsheet update only
+        # 主要駅。Google Spreadsheetに反映するが、CSVは保存しない
+        run: |
+          python -m scraping fukuoka_major_station --skip-csv-storing
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: scraping/credentials.json

@@ -34,6 +34,11 @@ def main():
         action="store_true",
         help="Skip updating Google Spreadsheet",
     )
+    parser.add_argument(
+        "--skip-csv-storing",
+        action="store_true",
+        help="Skip storing CSV files",
+    )
     args = parser.parse_args()
 
     case_name = args.case_name
@@ -41,15 +46,18 @@ def main():
     # スクレイピング
     scraper = Scraper(case_name)
     scraper.extract_page(max_page=1000)
-    _output_csv(scraper.df_lake, f"data/{case_name}/lake")
+    if not args.skip_csv_storing:
+        _output_csv(scraper.df_lake, f"data/{case_name}/lake")
 
     # スクレイピング結果を整形
     scraper.format_data()
-    _output_csv(scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted")
+    if not args.skip_csv_storing:
+        _output_csv(scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted")
 
     # grouping処理を行う
     scraper.remove_replications(group_cols=["name", "price", "age", "layout", "area"])
-    _output_csv(scraper.df_grouped.sort_values("id"), f"data/{case_name}/grouped")
+    if not args.skip_csv_storing:
+        _output_csv(scraper.df_grouped.sort_values("id"), f"data/{case_name}/grouped")
 
     # Google Spreadsheetを更新
     if not args.skip_spreadsheet:

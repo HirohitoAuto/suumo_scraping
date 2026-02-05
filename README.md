@@ -118,7 +118,7 @@ python -m scraping <case_name> --skip-csv-storing
 ```
 
 **利用可能なcase_name**:
-- `fukuoka_convinient`: 便利な駅から徒歩15分以内の物件
+- `fukuoka_convinient`: 利便性の高い駅から徒歩15分以内の物件
 - `fukuoka_major_station`: 主要駅から徒歩15分以内の物件
 - `fukuoka_nov_2024`: その他の検索条件
 

@@ -2,7 +2,7 @@ name: Daily Spreadsheet Update
 
 on:
   schedule:
-    - cron: "0 0 * * *" # 毎日0時(UTC)に実行
+    - cron: "0 1 * * *" # 毎日10時(JST)に実行 (UTC 1:00)
   workflow_dispatch: # 手動実行を可能にするトリガー
 
 jobs:

@@ -2,7 +2,7 @@ name: Daily Spreadsheet Update
 
 on:
   schedule:
-    - cron: "0 0 * * *" # 毎日0時に実行
+    - cron: "0 0 * * *" # 毎日0時(UTC)に実行
   workflow_dispatch: # 手動実行を可能にするトリガー
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
           GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Run scraping for fukuoka_major_station with spreadsheet update only
-        # 主要駅。GoogleSpreadSheetに反映するが、CSVは保存しない
+        # 主要駅。Google Spreadsheetに反映するが、CSVは保存しない
         run: |
           python -m scraping fukuoka_major_station --skip-csv-storing
         env:

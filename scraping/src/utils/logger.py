@@ -5,6 +5,7 @@
 """
 
 import logging
+import re
 import sys
 from pathlib import Path
 from typing import Optional
@@ -33,12 +34,17 @@ def get_logger(
         >>> logger.info("処理を開始しました")
         >>> logger.warning("警告メッセージ")
         >>> logger.error("エラーが発生しました")
+
+    Note:
+        同じロガー名で複数回呼び出された場合、最初の設定が使用されます。
+        異なる設定が必要な場合は、異なるロガー名を使用してください。
     """
     # ロガーを取得
     logger = logging.getLogger(name)
     logger.setLevel(level)
 
     # 既にハンドラが設定されている場合はそのまま返す（重複防止）
+    # 注意: この場合、引数で指定された設定は無視されます
     if logger.handlers:
         return logger
 
@@ -63,8 +69,10 @@ def get_logger(
         log_path = Path(log_dir)
         log_path.mkdir(parents=True, exist_ok=True)
 
-        # ログファイルのパス（ロガー名をファイル名として使用）
-        log_file = log_path / f"{name.replace('.', '_')}.log"
+        # ログファイルのパス（ロガー名をファイル名に変換）
+        # 安全なファイル名に変換（アルファベット、数字、ハイフン、アンダースコアのみ）
+        safe_name = re.sub(r"[^\w\-]", "_", name)
+        log_file = log_path / f"{safe_name}.log"
 
         file_handler = logging.FileHandler(log_file, encoding="utf-8")
         file_handler.setLevel(level)

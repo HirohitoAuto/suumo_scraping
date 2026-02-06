@@ -1,7 +1,13 @@
+import logging
+
 import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 from gspread_dataframe import set_with_dataframe
+
+from .logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class GcpSpreadSheet:
@@ -33,8 +39,9 @@ class GcpSpreadSheet:
             include_index=False,
             include_column_header=True,
         )
-        print(f"DataFrame has been written to sheet '{sheet_name}'.")
-        print(df.head())
+        logger.info(f"DataFrame has been written to sheet '{sheet_name}'.")
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug(f"DataFrame head:\n{df.head()}")
 
 
 if __name__ == "__main__":

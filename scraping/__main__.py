@@ -39,19 +39,35 @@ def main():
         action="store_true",
         help="Skip storing CSV files",
     )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Dry run mode: scrape only 1 page, skip CSV and Spreadsheet updates",
+    )
     args = parser.parse_args()
 
     case_name = args.case_name
 
+    # Dry runモードの場合、max_page=1に設定
+    max_page = 1 if args.dry_run else 1000
+    
+    if args.dry_run:
+        print("=== DRY RUN MODE ===")
+        print("- Scraping only 1 page")
+        print("- CSV saving disabled")
+        print("- Google Spreadsheet update disabled")
+        print("=" * 20)
+
     scraper = Scraper(case_name)
-    scraper.extract_page(max_page=1000)  # スクレイピング
+    scraper.extract_page(max_page=max_page)  # スクレイピング
     scraper.format_data()  # スクレイピング結果を整形
     scraper.remove_replications(
         group_cols=["name", "price", "age", "layout", "area"]
     )  # grouping処理を行う
 
     # 結果データフレームをcsvに保存
-    if not args.skip_csv_storing:
+    # Dry runモードの場合はスキップ
+    if not args.skip_csv_storing and not args.dry_run:
         _output_csv(scraper.df_lake, f"data/{case_name}/lake")
         _output_csv(
             scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted"
@@ -59,7 +75,8 @@ def main():
         _output_csv(scraper.df_grouped.sort_values("id"), f"data/{case_name}/grouped")
 
     # Google Spreadsheetを更新
-    if not args.skip_spreadsheet:
+    # Dry runモードの場合はスキップ
+    if not args.skip_spreadsheet and not args.dry_run:
         print("Updating Google Spreadsheet...")
         # dfにタイムスタンプのカラムを追加
         df_gss = scraper.df_grouped.sort_values("id").copy()

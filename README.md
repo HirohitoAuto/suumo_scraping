@@ -51,14 +51,11 @@ Google Spreadsheet連携を使用する場合は、`scraping/credentials.json`�
 
 ## GitHub Actions ワークフロー
 
-### weekly-csv-update.yml
-毎週月曜日 1:00 (UTC)に`fukuoka_convinient`をスクレイピングしCSVを保存・コミット
-
-### daily-gss-update.yml
-毎日 1:00 (UTC)に`fukuoka_major_station`をスクレイピングしGoogle Spreadsheetを更新
-
-### check_spec.yml
-GitHub Actionsランナーのスペック確認（手動実行）
+| ワークフロー | 実行タイミング | 処理内容 |
+|---|---|---|
+| weekly-csv-update.yml | 毎週月曜日 1:00 (UTC) | `fukuoka_convinient`をスクレイピングしCSVを保存・コミット |
+| daily-gss-update.yml | 毎日 1:00 (UTC) | `fukuoka_major_station`をスクレイピングしGoogle Spreadsheetを更新 |
+| check_spec.yml | 手動実行 | GitHub Actionsランナーのスペック確認 |
 
 ## スクレイピング処理
 

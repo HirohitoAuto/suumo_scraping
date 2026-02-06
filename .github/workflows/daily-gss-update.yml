@@ -4,12 +4,20 @@ on:
   schedule:
     - cron: "0 1 * * *" # 毎日1時(UTC)に実行 = 日本時間午前10:00
   workflow_dispatch: # 手動実行を可能にするトリガー
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+    types:
+      - closed # マージされたPRを検出
 
 jobs:
   gss_update:
     runs-on: ubuntu-latest
     permissions:
-      contents: read  # Read-only access to repository contents
+      contents: read # Read-only access to repository contents
 
     steps:
       - name: Checkout repository

@@ -17,8 +17,7 @@ def get_logger(
     log_dir: Optional[str] = None,
     log_to_file: bool = False,
 ) -> logging.Logger:
-    """
-    カスタムロガーを取得する
+    """カスタムロガーを取得する
 
     Args:
         name (str): ロガー名（通常は __name__ を指定）
@@ -83,8 +82,7 @@ def get_logger(
 
 
 def setup_root_logger(level: int = logging.INFO) -> None:
-    """
-    ルートロガーをセットアップする
+    """ルートロガーをセットアップする
 
     アプリケーション全体のデフォルトログレベルを設定する場合に使用します。
 

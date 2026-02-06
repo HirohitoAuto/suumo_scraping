@@ -38,7 +38,7 @@ class Scraper:
         """
         soup = self._parse_html(url)
         items = soup.find_all("div", class_="property_unit-content")
-        logger.info(f"items: {len(items)}")
+        logger.debug(f"items: {len(items)}")
 
         data_page = []
         for item in items:

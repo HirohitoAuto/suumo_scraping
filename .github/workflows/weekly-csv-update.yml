@@ -2,7 +2,7 @@ name: Weekly CSV Update
 
 on:
   schedule:
-    - cron: "0 0 * * 1" # 毎週月曜日の0時(UTC)に実行
+    - cron: "0 1 * * 1" # 毎週月曜日の1時(UTC)に実行 = 日本時間午前10:00
   workflow_dispatch: # 手動実行を可能にするトリガー
 
 jobs:

@@ -18,29 +18,34 @@ suumo_scraping/
 ├── .github/              # GitHub Actions ワークフロー
 │   └── workflows/
 │       ├── weekly-csv-update.yml      # 週次CSVデータ更新
-│       ├── scrape-and-commit.yml      # 週次スクレイピング＆コミット
+│       ├── daily-gss-update.yml       # 日次Google Spreadsheet更新
 │       └── check_spec.yml             # ランナースペック確認
 ├── scraping/              # スクレイピング関連のコード
 │   ├── __main__.py       # メインエントリーポイント
 │   ├── scraping_manager.py  # スクレイピング管理
-│   ├── requirements.txt   # Python依存関係
 │   ├── setting.yml       # スクレイピング設定
-│   ├── credentials.json  # GCP認証情報
+│   ├── data/             # スクレイピング結果データ（CSV）
 │   └── src/
 │       ├── core/         # コアロジック
 │       │   └── formatter.py           # データ整形
 │       └── utils/        # ユーティリティ
 │           ├── gcp_spreadsheet.py     # GCP Spreadsheet連携
 │           └── yaml_handler.py        # YAML設定読込
-├── Dockerfile.scraping
-└── Makefile
+├── analysis/             # データ分析用ノートブック
+│   ├── *.ipynb          # Jupyter Notebook
+│   └── chart_meta/      # チャート設定
+├── pyproject.toml        # プロジェクト設定とPython依存関係
+├── uv.lock              # uvロックファイル
+├── Dockerfile           # Dockerイメージ定義
+└── Makefile             # Make コマンド定義
 ```
 
 ## セットアップ
 
 ### 前提条件
 
-- Python 3.11以上
+- Python 3.12以上
+- [uv](https://docs.astral.sh/uv/) パッケージマネージャー
 - GCP認証情報（Google Spreadsheet連携を使用する場合）
 
 ### インストール
@@ -51,13 +56,22 @@ git clone <repository-url>
 cd suumo_scraping
 ```
 
-2. 依存パッケージのインストール
+2. uvのインストール（未インストールの場合）
 ```bash
-cd scraping
-pip install -r requirements.txt
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-3. GCP認証情報の設定（Google Spreadsheet連携を使用する場合）
+3. 依存パッケージのインストール
+```bash
+# プロジェクトルートで実行
+uv sync
+```
+
+4. GCP認証情報の設定（Google Spreadsheet連携を使用する場合）
 ```bash
 # credentials.jsonをscraping/ディレクトリに配置
 cp /path/to/your/credentials.json scraping/credentials.json
@@ -68,19 +82,17 @@ cp /path/to/your/credentials.json scraping/credentials.json
 このリポジトリには以下のGitHub Actionsワークフローが設定されています：
 
 ### weekly-csv-update.yml
-- **実行タイミング**: 毎週月曜日 0:00 (UTC) / 手動実行可能
+- **実行タイミング**: 毎週月曜日 1:00 (UTC) / 手動実行可能
 - **処理内容**: `fukuoka_convinient` のデータをスクレイピングしCSVファイルとして保存（Google Spreadsheetには反映しない）
 - **自動コミット**: CSVデータの更新を自動的にmainブランチにコミット
 
-### scrape-and-commit.yml
-- **実行タイミング**: 毎週月曜日 0:00 (UTC) / 手動実行可能
-- **処理内容**: 
-  - `fukuoka_convinient`: CSVのみ保存
-  - `fukuoka_major_station`: CSVとGoogle Spreadsheetに保存
-- **自動コミット**: CSVデータの更新を自動的にmainブランチにコミット
+### daily-gss-update.yml
+- **実行タイミング**: 毎日 1:00 (UTC) / 手動実行可能
+- **処理内容**: `fukuoka_major_station` のデータをスクレイピングしGoogle Spreadsheetに反映（CSVは保存しない）
+- **自動コミット**: なし（Google Spreadsheetのみ更新）
 
 ### check_spec.yml
-- **実行タイミング**: pushまたは手動実行
+- **実行タイミング**: 手動実行のみ
 - **処理内容**: GitHub Actionsランナーのスペック（CPU、メモリ、ディスク、OS）を確認
 
 ## `scraping/` - スクレイピング処理
@@ -102,18 +114,20 @@ SUUMOのWebサイトから中古マンション物件情報をスクレイピン
 #### ローカルで実行する場合
 
 ```bash
-# 依存パッケージのインストール
-cd scraping
-pip install -r requirements.txt
+# 依存パッケージのインストール（プロジェクトルートで実行）
+uv sync
 
 # 基本実行（CSVとGoogle Spreadsheetに保存）
-python -m scraping <case_name>
+uv run python -m scraping <case_name>
 
 # CSVのみ保存（Google Spreadsheet更新をスキップ）
-python -m scraping <case_name> --skip-spreadsheet
+uv run python -m scraping <case_name> --skip-spreadsheet
 
 # Google Spreadsheetのみ更新（CSV保存をスキップ）
-python -m scraping <case_name> --skip-csv-storing
+uv run python -m scraping <case_name> --skip-csv-storing
+
+# Dry Run（1ページのみスクレイピング、保存なし）
+uv run python -m scraping <case_name> --dry-run
 ```
 
 **利用可能なcase_name**:
@@ -125,13 +139,13 @@ python -m scraping <case_name> --skip-csv-storing
 
 ```bash
 # イメージのビルド
-make build_scraping
+make build
 
-# コンテナの実行
-make run_scraping
+# コンテナの実行（bashシェル起動）
+make run
 
-# コンテナ内でスクレイピング実行
-python -m scraping <case_name>
+# Dry Runを実行
+make dry-run
 ```
 
 ## ダッシュボード

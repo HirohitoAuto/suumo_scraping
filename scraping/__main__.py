@@ -89,7 +89,7 @@ def main():
         df_gss = scraper.df_grouped.sort_values("id").copy()
         df_gss["updated_at"] = now_jst.strftime("%Y-%m-%d %H:%M:%S")
         filename_credentials = str(script_dir / "credentials.json")
-        
+
         # 環境変数からスプレッドシートキーを取得
         spreadsheet_key = os.environ.get("GOOGLE_SPREAD_SHEET_KEY")
         if not spreadsheet_key:
@@ -97,7 +97,7 @@ def main():
                 "GOOGLE_SPREAD_SHEET_KEY environment variable is not set. "
                 "Please set it before running this script."
             )
-        
+
         spreadsheet = GcpSpreadSheet(
             key=spreadsheet_key,
             filename_credentials=filename_credentials,

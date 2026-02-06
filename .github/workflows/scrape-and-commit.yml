@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.11.10" # 必要なPythonのバージョンを指定
+          python-version: "3.12" # 必要なPythonのバージョンを指定
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -24,9 +24,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: |
-          cd scraping
-          uv sync
+        run: uv sync
 
       - name: Set up GCP credentials
         run: |
@@ -36,15 +34,11 @@ jobs:
 
       - name: Run scrape.py for fukuoka_convinient
         # 人気駅。GoogleSpreadSheetには反映しない
-        run: |
-          cd scraping
-          uv run python -m scraping fukuoka_convinient --skip-spreadsheet
+        run: uv run python -m scraping fukuoka_convinient --skip-spreadsheet
 
       - name: Run scrape.py for fukuoka_major_station
         # 主要駅。GoogleSpreadSheetに反映する
-        run: |
-          cd scraping
-          uv run python -m scraping fukuoka_major_station
+        run: uv run python -m scraping fukuoka_major_station
         env:
           GOOGLE_APPLICATION_CREDENTIALS: scraping/credentials.json
 

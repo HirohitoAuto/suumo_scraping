@@ -10,8 +10,6 @@ on:
   pull_request:
     branches:
       - main
-    types:
-      - closed # マージされたPRを検出
 
 jobs:
   gss_update:

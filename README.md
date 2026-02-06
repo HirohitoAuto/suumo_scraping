@@ -45,7 +45,9 @@ cd suumo_scraping
 make build
 ```
 
-GCP認証情報が必要な場合は、`scraping/credentials.json`に配置してください。
+### GCP認証情報の設定（オプション）
+
+Google Spreadsheet連携を使用する場合は、`scraping/credentials.json`に認証情報を配置してください。
 
 ## GitHub Actions ワークフロー
 
@@ -67,11 +69,15 @@ SUUMOから物件情報を取得し、データ整形・重複除去を行い、
 ### 実行方法
 
 ```bash
-# Dockerコンテナ内でスクレイピング実行
+# Dockerコンテナを起動してbashシェルに入る
 make run
-# コンテナ内で: uv run python -m scraping <case_name>
 
-# Dry Run（1ページのみスクレイピング）
+# コンテナ内で以下を実行
+uv run python -m scraping <case_name>
+```
+
+または、Dry Runで動作確認：
+```bash
 make dry-run
 ```
 

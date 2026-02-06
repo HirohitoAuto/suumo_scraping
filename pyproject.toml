@@ -1,0 +1,17 @@
+[project]
+name = "suumo-scraping"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2,<1.0.0",
+    "duckdb>=1.4.4,<2.0.0",
+    "google>=3.0.0,<4.0.0",
+    "gspread>=6.2.1,<7.0.0",
+    "gspread-dataframe>=4.0.0,<5.0.0",
+    "pandas>=3.0.0,<4.0.0",
+    "pyyaml>=6.0.3,<7.0.0",
+    "requests>=2.32.5,<3.0.0",
+    "retry>=0.9.2,<1.0.0",
+]

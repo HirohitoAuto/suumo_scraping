@@ -1,7 +1,7 @@
-build_scraping:
-	docker build -t suumo_scraping -f Dockerfile.scraping . --no-cache
+build:
+	docker build -t suumo_scraping .
 
-run_scraping:
-	docker run -it \
-		-v ./scraping/:/usr/scraping \
+run:
+	docker run -it --rm \
+		-v ./scraping/:/app/scraping \
 		suumo_scraping bash

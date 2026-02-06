@@ -69,7 +69,7 @@ def main():
     scraper.extract_page(max_page=max_page)  # スクレイピング
     scraper.format_data()  # スクレイピング結果を整形
     scraper.remove_replications(
-        group_cols=["name", "price", "age", "layout", "area"]
+        group_cols=["price", "age", "area", "station_name"]
     )  # grouping処理を行う
 
     # 結果データフレームをcsvに保存

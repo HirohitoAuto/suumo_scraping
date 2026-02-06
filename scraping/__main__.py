@@ -1,17 +1,24 @@
 import argparse
 import os
 from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
 from dateutil import tz
+from dotenv import load_dotenv
 
 from .scraping_manager import Scraper
 from .src.utils.gcp_spreadsheet import GcpSpreadSheet
 
+# Load environment variables from .env file if it exists
+script_dir = os.path.dirname(__file__)
+env_path = Path(script_dir) / ".env"
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
+
 jst = tz.gettz("Asia/Tokyo")
 now_jst = datetime.now(jst)
 yyyymmdd = int(now_jst.strftime("%Y%m%d"))
-script_dir = os.path.dirname(__file__)
 
 
 def _output_csv(df: pd.DataFrame, dir_path: str) -> None:

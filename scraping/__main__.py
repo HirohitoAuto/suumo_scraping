@@ -11,8 +11,8 @@ from .scraping_manager import Scraper
 from .src.utils.gcp_spreadsheet import GcpSpreadSheet
 
 # Load environment variables from .env file if it exists
-script_dir = os.path.dirname(__file__)
-env_path = Path(script_dir) / ".env"
+script_dir = Path(__file__).parent
+env_path = script_dir / ".env"
 if env_path.exists():
     load_dotenv(dotenv_path=env_path)
 
@@ -24,7 +24,7 @@ yyyymmdd = int(now_jst.strftime("%Y%m%d"))
 def _output_csv(df: pd.DataFrame, dir_path: str) -> None:
     # 相対パスの場合、スクリプトのディレクトリを基準に解決
     if not os.path.isabs(dir_path):
-        dir_path = os.path.join(script_dir, dir_path)
+        dir_path = os.path.join(str(script_dir), dir_path)
 
     os.makedirs(dir_path, exist_ok=True)
     filename = os.path.join(dir_path, f"{yyyymmdd}.csv")
@@ -88,7 +88,7 @@ def main():
         # dfにタイムスタンプのカラムを追加
         df_gss = scraper.df_grouped.sort_values("id").copy()
         df_gss["updated_at"] = now_jst.strftime("%Y-%m-%d %H:%M:%S")
-        filename_credentials = os.path.join(script_dir, "credentials.json")
+        filename_credentials = os.path.join(str(script_dir), "credentials.json")
         
         # 環境変数からスプレッドシートキーを取得
         spreadsheet_key = os.environ.get("GOOGLE_SPREAD_SHEET_KEY")

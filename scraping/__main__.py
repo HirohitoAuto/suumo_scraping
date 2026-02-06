@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 
 from .scraping_manager import Scraper
 from .src.utils.gcp_spreadsheet import GcpSpreadSheet
+from .src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 # Load environment variables from .env file if it exists
 script_dir = Path(__file__).parent
@@ -59,11 +62,11 @@ def main():
     max_page = 1 if args.dry_run else 1000
 
     if args.dry_run:
-        print("=== DRY RUN MODE ===")
-        print("- Scraping only 1 page")
-        print("- CSV saving disabled")
-        print("- Google Spreadsheet update disabled")
-        print("=" * 20)
+        logger.info("=== DRY RUN MODE ===")
+        logger.info("- Scraping only 1 page")
+        logger.info("- CSV saving disabled")
+        logger.info("- Google Spreadsheet update disabled")
+        logger.info("=" * 20)
 
     scraper = Scraper(case_name)
     scraper.extract_page(max_page=max_page)  # スクレイピング
@@ -84,7 +87,7 @@ def main():
     # Google Spreadsheetを更新
     # Dry runモードの場合はスキップ
     if not args.skip_spreadsheet and not args.dry_run:
-        print("Updating Google Spreadsheet...")
+        logger.info("Updating Google Spreadsheet...")
         # dfにタイムスタンプのカラムを追加
         df_gss = scraper.df_grouped.sort_values("id").copy()
         df_gss["updated_at"] = now_jst.strftime("%Y-%m-%d %H:%M:%S")

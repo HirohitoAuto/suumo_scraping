@@ -7,7 +7,10 @@ from bs4 import BeautifulSoup
 from retry import retry
 
 from .src.core.formatter import format_data
+from .src.utils.logger import get_logger
 from .src.utils.yaml_handler import load_yaml
+
+logger = get_logger(__name__)
 
 
 class Scraper:
@@ -35,7 +38,7 @@ class Scraper:
         """
         soup = self._parse_html(url)
         items = soup.find_all("div", class_="property_unit-content")
-        print("items: ", len(items))
+        logger.info(f"items: {len(items)}")
 
         data_page = []
         for item in items:
@@ -88,7 +91,7 @@ class Scraper:
         """
         data_all_pages = []
         for page in range(1, max_page + 1):
-            print("\npage: ", page)
+            logger.info(f"page: {page}")
             url = self.base_url.format(page)
             data_page = self._extract_used_page(url)
             if len(data_page) == 0:

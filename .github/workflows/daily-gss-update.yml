@@ -39,3 +39,4 @@ jobs:
         run: uv run python -m scraping main_disttricts --skip-csv-storing
         env:
           GOOGLE_APPLICATION_CREDENTIALS: scraping/credentials.json
+          GOOGLE_SPREAD_SHEET_KEY: ${{ secrets.GOOGLE_SPREAD_SHEET_KEY }}

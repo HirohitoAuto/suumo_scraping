@@ -20,11 +20,15 @@ jobs:
         with:
           python-version: "3.11.10" # 必要なPythonのバージョンを指定
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
       - name: Install dependencies
         run: |
           cd scraping
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          uv sync
 
       - name: Set up GCP credentials
         run: |
@@ -35,7 +39,8 @@ jobs:
       - name: Run scraping for fukuoka_convinient with CSV storage only
         # 人気駅。CSVを保存するが、Google Spreadsheetには反映しない
         run: |
-          python -m scraping fukuoka_convinient --skip-spreadsheet
+          cd scraping
+          uv run python -m scraping fukuoka_convinient --skip-spreadsheet
 
       - name: Pull main branch
         run: |

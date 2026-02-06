@@ -50,7 +50,7 @@ def main():
 
     # Dry runモードの場合、max_page=1に設定
     max_page = 1 if args.dry_run else 1000
-    
+
     if args.dry_run:
         print("=== DRY RUN MODE ===")
         print("- Scraping only 1 page")

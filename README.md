@@ -54,7 +54,7 @@ Google Spreadsheet連携を使用する場合は、`scraping/credentials.json`�
 | ワークフロー | 実行タイミング | 処理内容 |
 |---|---|---|
 | weekly-csv-update.yml | 毎週月曜日 1:00 (UTC) | `fukuoka_convinient`をスクレイピングしCSVを保存・コミット |
-| daily-gss-update.yml | 毎日 1:00 (UTC) | `fukuoka_major_station`をスクレイピングしGoogle Spreadsheetを更新 |
+| daily-gss-update.yml | 毎日 1:00 (UTC) | `main_disttricts`をスクレイピングしGoogle Spreadsheetを更新 |
 | check_spec.yml | 手動実行 | GitHub Actionsランナーのスペック確認 |
 
 ## スクレイピング処理
@@ -81,7 +81,7 @@ make dry-run
 ### 利用可能なcase_name
 
 - `fukuoka_convinient`: 利便性の高い駅から徒歩15分以内の物件
-- `fukuoka_major_station`: 主要駅から徒歩15分以内の物件
+- `main_disttricts`: 福岡市+春日市+大野城市で、駅から徒歩20分以内の物件
 - `fukuoka_nov_2024`: その他の検索条件
 
 ### オプション

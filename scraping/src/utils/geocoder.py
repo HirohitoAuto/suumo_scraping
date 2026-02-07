@@ -91,5 +91,5 @@ def get_coordinates_from_address(
         logger.error(f"通信エラー: {e}")
         return None
     except Exception as e:
-        logger.error(f"予期しないエラーが発生しました: {e}")
+        logger.exception(f"予期しないエラーが発生しました: {e}")
         return None

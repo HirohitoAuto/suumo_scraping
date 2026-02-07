@@ -141,30 +141,25 @@ class Scraper:
         """
         df = self.df_grouped.copy()
         
-        # 緯度・経度を格納するリスト
-        latitudes = []
-        longitudes = []
-        
-        # 各行の住所から緯度・経度を取得
-        for idx, row in df.iterrows():
+        def get_coordinates_for_row(row):
+            """行ごとに緯度・経度を取得する"""
             address = row.get("address", "")
             if pd.notna(address) and address.strip():
                 coordinates = get_coordinates_from_address(address, api_key)
                 if coordinates:
-                    lat, lon = coordinates
-                    latitudes.append(lat)
-                    longitudes.append(lon)
+                    return pd.Series({"lat": coordinates[0], "lon": coordinates[1]})
                 else:
                     logger.warning(f"座標取得失敗: {address}")
-                    latitudes.append(None)
-                    longitudes.append(None)
+                    return pd.Series({"lat": None, "lon": None})
             else:
                 logger.warning(f"住所が空です: id={row.get('id', 'unknown')}")
-                latitudes.append(None)
-                longitudes.append(None)
+                return pd.Series({"lat": None, "lon": None})
+        
+        # 各行に対して緯度・経度を取得
+        coordinates_df = df.apply(get_coordinates_for_row, axis=1)
         
         # 緯度・経度カラムを追加
-        df["lat"] = latitudes
-        df["lon"] = longitudes
+        df["lat"] = coordinates_df["lat"]
+        df["lon"] = coordinates_df["lon"]
         
         self.df_mart = df

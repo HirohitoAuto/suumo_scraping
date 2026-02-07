@@ -75,6 +75,19 @@ def main():
         group_cols=["price", "age", "area", "station_name"]
     )  # grouping処理を行う
 
+    # 緯度・経度を追加してdf_martを作成
+    # Dry runモードの場合はスキップ
+    if not args.dry_run:
+        google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
+        if not google_maps_api_key:
+            logger.warning(
+                "GOOGLE_MAPS_API_KEY environment variable is not set. "
+                "Skipping coordinate geocoding."
+            )
+    else:
+        logger.info("Adding coordinates to data...")
+        scraper.add_cordinates(google_maps_api_key)
+
     # 結果データフレームをcsvに保存
     # Dry runモードの場合はスキップ
     if not args.skip_csv_storing and not args.dry_run:
@@ -82,14 +95,14 @@ def main():
         _output_csv(
             scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted"
         )
-        _output_csv(scraper.df_grouped.sort_values("id"), f"data/{case_name}/grouped")
+        _output_csv(scraper.df_mart.sort_values("id"), f"data/{case_name}/mart")
 
     # Google Spreadsheetを更新
     # Dry runモードの場合はスキップ
     if not args.skip_spreadsheet and not args.dry_run:
         logger.info("Updating Google Spreadsheet...")
         # dfにタイムスタンプのカラムを追加
-        df_gss = scraper.df_grouped.sort_values("id").copy()
+        df_gss = scraper.df_mart.sort_values("id").copy()
         df_gss["updated_at"] = now_jst.strftime("%Y-%m-%d %H:%M:%S")
         filename_credentials = str(script_dir / "credentials.json")
 

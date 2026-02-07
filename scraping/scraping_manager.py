@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from retry import retry
 
 from .src.core.formatter import format_data
+from .src.utils.geocoder import get_coordinates_from_address
 from .src.utils.logger import get_logger
 from .src.utils.yaml_handler import load_yaml
 
@@ -128,3 +129,37 @@ class Scraper:
         where id in (select id from valid_ids)
         """
         self.df_grouped = duckdb.query(query).to_df()
+
+    def add_cordinates(self, api_key: str) -> None:
+        """住所から緯度・経度を取得してDataFrameに追加する
+
+        Args:
+            api_key (str): Google Maps Platform APIキー
+
+        Returns:
+            None
+        """
+        df = self.df_grouped.copy()
+        
+        def get_coordinates_for_row(row):
+            """行ごとに緯度・経度を取得する"""
+            address = row.get("address", "")
+            if pd.notna(address) and address.strip():
+                coordinates = get_coordinates_from_address(address, api_key)
+                if coordinates:
+                    return pd.Series({"lat": coordinates[0], "lon": coordinates[1]})
+                else:
+                    logger.warning(f"座標取得失敗: {address}")
+                    return pd.Series({"lat": None, "lon": None})
+            else:
+                logger.warning(f"住所が空です: id={row.get('id', 'unknown')}")
+                return pd.Series({"lat": None, "lon": None})
+        
+        # 各行に対して緯度・経度を取得
+        coordinates_df = df.apply(get_coordinates_for_row, axis=1)
+        
+        # 緯度・経度カラムを追加
+        df["lat"] = coordinates_df["lat"]
+        df["lon"] = coordinates_df["lon"]
+        
+        self.df_mart = df

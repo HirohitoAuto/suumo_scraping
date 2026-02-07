@@ -22,11 +22,11 @@ CACHE_FILE_PATH = os.path.join(
 )
 
 
-def _load_cache() -> Dict[str, Dict[str, str]]:
+def _load_cache() -> Dict[str, Dict[str, float]]:
     """キャッシュファイルから過去のジオコーディング結果を読み込む
     
     Returns:
-        Dict[str, Dict[str, str]]: キャッシュデータ。キーはID、値は{"lat": ..., "lon": ...}の辞書
+        Dict[str, Dict[str, float]]: キャッシュデータ。キーはID、値は{"lat": ..., "lon": ...}の辞書
     """
     if not os.path.exists(CACHE_FILE_PATH):
         logger.info(f"キャッシュファイルが存在しません: {CACHE_FILE_PATH}")
@@ -45,7 +45,7 @@ def _load_cache() -> Dict[str, Dict[str, str]]:
         return {}
 
 
-def _save_cache(cache: Dict[str, Dict[str, str]]) -> None:
+def _save_cache(cache: Dict[str, Dict[str, float]]) -> None:
     """ジオコーディング結果をキャッシュファイルに保存する
     
     Args:
@@ -98,6 +98,7 @@ def get_coordinates_from_address(
         - レート制限やクォータ制限がある場合があります
         - ネットワークエラーやAPIエラーが発生した場合はNoneを返します
         - property_idが指定されている場合、過去の結果をキャッシュから取得します
+        - 並行実行には対応していません。複数プロセスでの同時実行時はキャッシュの競合が発生する可能性があります
     """
     # 入力値の検証
     if not address or not address.strip():

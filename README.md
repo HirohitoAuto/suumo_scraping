@@ -49,6 +49,24 @@ make build
 
 Google Spreadsheet連携を使用する場合は、`scraping/credentials.json`に認証情報を配置してください。
 
+### Google Maps API設定（座標取得機能を使用する場合）
+
+物件の住所から緯度・経度を取得する機能を使用する場合は、Google Maps Platform APIキーが必要です。
+
+1. [Google Cloud Console](https://console.cloud.google.com/)でプロジェクトを作成
+2. Geocoding APIを有効化
+3. APIキーを作成
+4. 環境変数に設定：
+   ```bash
+   export GOOGLE_MAPS_API_KEY="your_api_key_here"
+   ```
+   または、`scraping/.env`ファイルに記載：
+   ```
+   GOOGLE_MAPS_API_KEY=your_api_key_here
+   ```
+
+この機能により、`data/{case_name}/mart/`ディレクトリに緯度（`lat`）・経度（`lon`）カラムを含む`df_mart`が保存されます。
+
 ## GitHub Actions ワークフロー
 
 | ワークフロー | 実行タイミング | 処理内容 |
@@ -89,6 +107,15 @@ make dry-run
 - `--skip-spreadsheet`: CSVのみ保存
 - `--skip-csv-storing`: Google Spreadsheetのみ更新
 - `--dry-run`: 1ページのみスクレイピング（保存なし）
+
+### 出力データ
+
+スクレイピング処理は以下のデータセットを生成します：
+
+- `data/{case_name}/lake/`: 生のスクレイピング結果
+- `data/{case_name}/formatted/`: 整形済みデータ
+- `data/{case_name}/grouped/`: 重複除去済みデータ
+- `data/{case_name}/mart/`: 緯度・経度情報を含むデータ（`GOOGLE_MAPS_API_KEY`が設定されている場合のみ）
 
 ## ダッシュボード
 [GoogleSpreadSheetのダッシュボード](https://lookerstudio.google.com/u/0/reporting/6b1b64cb-b655-41ac-8526-28da046e4463/page/piqkF)

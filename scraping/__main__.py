@@ -76,20 +76,19 @@ def main():
     )  # grouping処理を行う
 
     # 緯度・経度を追加してdf_martを作成
-    # Dry runモードでない場合のみ実行
-    if not args.dry_run:
-        google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
-        if not google_maps_api_key:
-            logger.warning(
-                "GOOGLE_MAPS_API_KEY environment variable is not set. "
-                "Skipping coordinate geocoding."
-            )
-        else:
-            logger.info("Adding coordinates to data...")
-            scraper.add_cordinates(google_maps_api_key)
-            # df_martをcsvに保存
-            if not args.skip_csv_storing:
-                _output_csv(scraper.df_mart.sort_values("id"), f"data/{case_name}/mart")
+    google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
+    if not google_maps_api_key:
+        logger.warning(
+            "GOOGLE_MAPS_API_KEY environment variable is not set. "
+            "Skipping coordinate geocoding."
+        )
+    else:
+        logger.info("Adding coordinates to data...")
+        scraper.add_cordinates(google_maps_api_key)
+        # df_martをcsvに保存
+        # Dry runモードの場合はスキップ
+        if not args.skip_csv_storing and not args.dry_run:
+            _output_csv(scraper.df_mart.sort_values("id"), f"data/{case_name}/mart")
 
     # 結果データフレームをcsvに保存
     # Dry runモードの場合はスキップ

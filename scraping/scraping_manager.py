@@ -147,7 +147,9 @@ class Scraper:
             address = row.get("address", "")
             property_id = row.get("id", None)
             if pd.notna(address) and address.strip():
-                coordinates = get_coordinates_from_address(address, api_key, property_id)
+                coordinates = get_coordinates_from_address(
+                    address, api_key, property_id
+                )
                 if coordinates:
                     return pd.Series({"lat": coordinates[0], "lon": coordinates[1]})
                 else:

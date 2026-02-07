@@ -175,8 +175,10 @@ class Scraper:
         # 各行に対して緯度・経度を取得
         # Dry runモードの場合はNoneを設定
         if not is_dry_run:
+            logger.info("Fetching coordinates from Google Maps API...")
             coordinates_df = df.apply(get_coordinates_for_row, axis=1)
         else:
+            logger.info("Dry run mode: setting coordinates to None")
             coordinates_df = pd.DataFrame(
                 {"lat": [None] * len(df), "lon": [None] * len(df)}
             )

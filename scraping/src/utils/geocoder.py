@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 
 # Cacheファイルのパス
 CACHE_FILE_PATH = os.path.join(
-    os.path.dirname(__file__), "../../data/geocoding_api_cache.json"
+    os.path.dirname(__file__), "../../data/geocoding_api_history.json"
 )
 
 
@@ -61,13 +61,21 @@ def _load_cache() -> Dict[str, Dict[str, float]]:
             valid_cache[key] = {"lat": float(lat), "lon": float(lon)}
 
         return valid_cache
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
         # JSON として読み取れない場合はキャッシュを無視する
-        logger.warning("Cacheファイルが壊れています。空のキャッシュを使用します。")
+        logger.warning(
+            "Cacheファイル(%s)が壊れています。空のキャッシュを使用します。: %s",
+            CACHE_FILE_PATH,
+            e,
+        )
         return {}
-    except Exception:
+    except Exception as e:
         # 予期せぬエラーの場合もキャッシュなしで継続する
-        logger.error("Cacheファイルの読み込みに失敗しました。空のキャッシュを使用します。", exc_info=True)
+        logger.exception(
+            "Cacheファイル(%s)の読み込みに失敗しました。空のキャッシュを使用します。: %s",
+            CACHE_FILE_PATH,
+            e,
+        )
         return {}
 
 

@@ -12,11 +12,14 @@ jobs:
   gss_update:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # Read-only access to repository contents
+      contents: write # Read and write access to repository contents
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          ref: main
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -43,3 +46,13 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: scraping/credentials.json
           GOOGLE_SPREAD_SHEET_KEY: ${{ secrets.GOOGLE_SPREAD_SHEET_KEY }}
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add scraping/data/geocoding_api_history.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update geocoding API cache"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -145,8 +145,15 @@ class Scraper:
         def get_coordinates_for_row(row):
             """行ごとに緯度・経度を取得する"""
             address = row.get("address", "")
-            if pd.notna(address) and address.strip():
-                coordinates = get_coordinates_from_address(address, api_key)
+            raw_property_id = row.get("id", None)
+            property_id = None
+            if pd.notna(raw_property_id) and raw_property_id != "":
+                # 正常なIDのみキャッシュキーとして利用できるように正規化
+                property_id = str(raw_property_id)
+            if pd.notna(address) and isinstance(address, str) and address.strip():
+                coordinates = get_coordinates_from_address(
+                    address, api_key, property_id
+                )
                 if coordinates:
                     return pd.Series({"lat": coordinates[0], "lon": coordinates[1]})
                 else:

@@ -90,6 +90,7 @@ class Scraper:
         Returns:
             None
         """
+        logger.info("Starting data extraction...")
         data_all_pages = []
         for page in range(1, max_page + 1):
             logger.info(f"page: {page}")
@@ -99,6 +100,7 @@ class Scraper:
                 break
             data_all_pages.extend(data_page)
         self.df_lake = pd.DataFrame(data_all_pages)
+        logger.info(f"Extracted {len(self.df_lake)} records.")
 
     def format_data(self) -> None:
         """スクレイピングしたデータを整形したDataFrameを作成する
@@ -109,6 +111,7 @@ class Scraper:
         Returns:
             None
         """
+        logger.info("Starting data formatting...")
         self.df_formatted = format_data(self.df_lake)
 
     def remove_replications(self, group_cols: list[str]) -> None:
@@ -120,6 +123,7 @@ class Scraper:
         Returns:
             None
         """
+        logger.info("Removing duplicated properties...")
         df_formatted = self.df_formatted
         group_cols_sql = ", ".join(group_cols)
         query = f"""
@@ -129,6 +133,9 @@ class Scraper:
         where id in (select id from valid_ids)
         """
         self.df_grouped = duckdb.query(query).to_df()
+        logger.info(
+            f"Reduced from {len(df_formatted)} to {len(self.df_grouped)} records."
+        )
 
     def add_coordinates(self, api_key: str, is_dry_run: bool = False) -> None:
         """住所から緯度・経度を取得してDataFrameに追加する
@@ -140,6 +147,7 @@ class Scraper:
         Returns:
             None
         """
+        logger.info("Adding coordinates to data...")
         df = self.df_grouped.copy()
 
         def get_coordinates_for_row(row):
@@ -155,6 +163,7 @@ class Scraper:
                     address, api_key, property_id
                 )
                 if coordinates:
+                    logger.info(f"取得成功: {address} -> {coordinates}")
                     return pd.Series({"lat": coordinates[0], "lon": coordinates[1]})
                 else:
                     logger.warning(f"座標取得失敗: {address}")

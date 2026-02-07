@@ -70,9 +70,13 @@ def get_coordinates_from_address(
             return None
 
         # 最初の結果から緯度・経度を取得
-        location = geocode_result[0]["geometry"]["location"]
-        latitude = location["lat"]
-        longitude = location["lng"]
+        try:
+            location = geocode_result[0]["geometry"]["location"]
+            latitude = location["lat"]
+            longitude = location["lng"]
+        except (KeyError, IndexError, TypeError) as e:
+            logger.error(f"APIレスポンスの構造が不正です: {e}")
+            return None
 
         logger.info(f"座標取得成功: 緯度={latitude}, 経度={longitude}")
         return (latitude, longitude)

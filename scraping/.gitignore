@@ -1,2 +1,5 @@
 # GCPのサービスアカウントの鍵
 credentials.json
+
+# dry-runモードで作成されたcsv
+data_dry/

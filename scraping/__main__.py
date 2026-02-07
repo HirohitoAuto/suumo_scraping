@@ -19,6 +19,9 @@ env_path = script_dir / ".env"
 if env_path.exists():
     load_dotenv(dotenv_path=env_path)
 
+# Get Google Maps API key from environment variables
+google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
+
 jst = tz.gettz("Asia/Tokyo")
 now_jst = datetime.now(jst)
 yyyymmdd = int(now_jst.strftime("%Y%m%d"))
@@ -76,26 +79,27 @@ def main():
     )  # grouping処理を行う
 
     # 緯度・経度を追加してdf_martを作成
-    # Dry runモードの場合はスキップ
-    if not args.dry_run:
-        google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
-        if not google_maps_api_key:
-            logger.warning(
-                "GOOGLE_MAPS_API_KEY environment variable is not set. "
-                "Skipping coordinate geocoding."
-            )
-    else:
-        logger.info("Adding coordinates to data...")
+    if not args.dry_run and google_maps_api_key is not None:
         scraper.add_cordinates(google_maps_api_key)
+    else:
+        scraper.add_cordinates(
+            google_maps_api_key, is_dry_run=True
+        )  # "lat"と"lon"にNoneを設定
 
     # 結果データフレームをcsvに保存
-    # Dry runモードの場合はスキップ
+    # Dry runモードの場合は`data_dry/`ディレクトリに保存
     if not args.skip_csv_storing and not args.dry_run:
         _output_csv(scraper.df_lake, f"data/{case_name}/lake")
         _output_csv(
             scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted"
         )
         _output_csv(scraper.df_mart.sort_values("id"), f"data/{case_name}/mart")
+    else:
+        _output_csv(scraper.df_lake, f"data_dry/{case_name}/lake")
+        _output_csv(
+            scraper.df_formatted.sort_values("id"), f"data_dry/{case_name}/formatted"
+        )
+        _output_csv(scraper.df_mart.sort_values("id"), f"data_dry/{case_name}/mart")
 
     # Google Spreadsheetを更新
     # Dry runモードの場合はスキップ

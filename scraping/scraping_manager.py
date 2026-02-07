@@ -130,17 +130,18 @@ class Scraper:
         """
         self.df_grouped = duckdb.query(query).to_df()
 
-    def add_cordinates(self, api_key: str) -> None:
+    def add_cordinates(self, api_key: str, is_dry_run: bool = False) -> None:
         """住所から緯度・経度を取得してDataFrameに追加する
 
         Args:
             api_key (str): Google Maps Platform APIキー
+            is_dry_run (bool): Dry runモードかどうか
 
         Returns:
             None
         """
         df = self.df_grouped.copy()
-        
+
         def get_coordinates_for_row(row):
             """行ごとに緯度・経度を取得する"""
             address = row.get("address", "")
@@ -154,12 +155,14 @@ class Scraper:
             else:
                 logger.warning(f"住所が空です: id={row.get('id', 'unknown')}")
                 return pd.Series({"lat": None, "lon": None})
-        
+
         # 各行に対して緯度・経度を取得
-        coordinates_df = df.apply(get_coordinates_for_row, axis=1)
-        
+        # Dry runモードの場合はNoneを設定
+        if not is_dry_run:
+            coordinates_df = df.apply(get_coordinates_for_row, axis=1)
+        else:
+            coordinates_df = pd.DataFrame(
+                {"lat": [None] * len(df), "lon": [None] * len(df)}
+            )
         # 緯度・経度カラムを追加
-        df["lat"] = coordinates_df["lat"]
-        df["lon"] = coordinates_df["lon"]
-        
-        self.df_mart = df
+        self.df_mart = df.assign(lat=coordinates_df["lat"], lon=coordinates_df["lon"])

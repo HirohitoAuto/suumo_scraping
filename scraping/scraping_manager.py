@@ -130,7 +130,7 @@ class Scraper:
         """
         self.df_grouped = duckdb.query(query).to_df()
 
-    def add_cordinates(self, api_key: str, is_dry_run: bool = False) -> None:
+    def add_coordinates(self, api_key: str, is_dry_run: bool = False) -> None:
         """住所から緯度・経度を取得してDataFrameに追加する
 
         Args:

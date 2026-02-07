@@ -80,9 +80,9 @@ def main():
 
     # 緯度・経度を追加してdf_martを作成
     if not args.dry_run and google_maps_api_key is not None:
-        scraper.add_cordinates(google_maps_api_key)
+        scraper.add_coordinates(google_maps_api_key)
     else:
-        scraper.add_cordinates(
+        scraper.add_coordinates(
             google_maps_api_key, is_dry_run=True
         )  # "lat"と"lon"にNoneを設定
 

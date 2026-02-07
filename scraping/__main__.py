@@ -85,10 +85,6 @@ def main():
     else:
         logger.info("Adding coordinates to data...")
         scraper.add_cordinates(google_maps_api_key)
-        # df_martをcsvに保存
-        # Dry runモードの場合はスキップ
-        if not args.skip_csv_storing and not args.dry_run:
-            _output_csv(scraper.df_mart.sort_values("id"), f"data/{case_name}/mart")
 
     # 結果データフレームをcsvに保存
     # Dry runモードの場合はスキップ
@@ -97,14 +93,14 @@ def main():
         _output_csv(
             scraper.df_formatted.sort_values("id"), f"data/{case_name}/formatted"
         )
-        _output_csv(scraper.df_grouped.sort_values("id"), f"data/{case_name}/grouped")
+        _output_csv(scraper.df_mart.sort_values("id"), f"data/{case_name}/mart")
 
     # Google Spreadsheetを更新
     # Dry runモードの場合はスキップ
     if not args.skip_spreadsheet and not args.dry_run:
         logger.info("Updating Google Spreadsheet...")
         # dfにタイムスタンプのカラムを追加
-        df_gss = scraper.df_grouped.sort_values("id").copy()
+        df_gss = scraper.df_mart.sort_values("id").copy()
         df_gss["updated_at"] = now_jst.strftime("%Y-%m-%d %H:%M:%S")
         filename_credentials = str(script_dir / "credentials.json")
 

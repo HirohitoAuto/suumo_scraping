@@ -38,5 +38,5 @@ jobs:
       - name: Run scraping for main_disttricts with Google SpreadSheet update
         run: uv run python -m scraping main_disttricts --skip-csv-storing --test-run
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: scraping/credentials.json
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
           GOOGLE_SPREAD_SHEET_KEY: ${{ secrets.GOOGLE_SPREAD_SHEET_KEY }}

@@ -57,18 +57,29 @@ def main():
         action="store_true",
         help="Dry run mode: scrape only 1 page, skip CSV and Spreadsheet updates",
     )
+    parser.add_argument(
+        "--test-run",
+        action="store_true",
+        help="Test run mode: scrape only 1 page. Nothing skipped, but written to 'test' sheet.",
+    )
     args = parser.parse_args()
 
     case_name = args.case_name
 
-    # Dry runモードの場合、max_page=1に設定
-    max_page = 1 if args.dry_run else 1000
+    # Dry run/Test runモードの場合、max_page=1に設定
+    max_page = 1 if args.dry_run or args.test_run else 1000
 
     if args.dry_run:
         logger.info("=== DRY RUN MODE ===")
         logger.info("- Scraping only 1 page")
         logger.info("- CSV saving disabled")
         logger.info("- Google Spreadsheet update disabled")
+        logger.info("=" * 20)
+
+    if args.test_run:
+        logger.info("=== TEST RUN MODE ===")
+        logger.info("- Scraping only 1 page")
+        logger.info("- Data will be written to 'test' sheet in Google Spreadsheet")
         logger.info("=" * 20)
 
     scraper = Scraper(case_name)
@@ -122,9 +133,12 @@ def main():
             key=spreadsheet_key,
             filename_credentials=filename_credentials,
         )
+        sheet_name = (
+            "test" if args.test_run else "latest"
+        )  # テストランの場合はlatest_testシートに書き込む
         spreadsheet.dump_dataframe(
             df=df_gss,
-            sheet_name="latest",
+            sheet_name=sheet_name,
         )
 
 

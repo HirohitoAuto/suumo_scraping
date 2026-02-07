@@ -1,4 +1,4 @@
-name: Test Run Google SpreadSheet Update
+name: Test Run
 
 on:
   workflow_dispatch: # 手動実行を可能にするトリガー

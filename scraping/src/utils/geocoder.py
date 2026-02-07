@@ -119,7 +119,10 @@ def get_coordinates_from_address(
             return (latitude, longitude)
         except (KeyError, ValueError, TypeError) as e:
             logger.warning(f"キャッシュデータが不正です: id={property_id}, error={e}")
-            # キャッシュが不正な場合はAPIを呼び出す
+            # キャッシュが不正な場合は削除して保存
+            del cache[str(property_id)]
+            _save_cache(cache)
+            # APIを呼び出す
 
     try:
         # Google Maps クライアントを初期化
@@ -148,8 +151,8 @@ def get_coordinates_from_address(
         # property_idが指定されている場合、結果をキャッシュに保存
         if property_id:
             cache[str(property_id)] = {
-                "lat": str(latitude),
-                "lon": str(longitude)
+                "lat": latitude,
+                "lon": longitude
             }
             _save_cache(cache)
             logger.info(f"キャッシュに保存しました: id={property_id}")

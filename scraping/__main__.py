@@ -75,7 +75,7 @@ def main():
         group_cols=["price", "age", "area", "station_name"]
     )  # grouping処理を行う
 
-    # 緯度・経度を追加してdf_martを作成
+    # 緯度・経度を追加してdf_martを作成（Dry runモードでも実行）
     google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
     if not google_maps_api_key:
         logger.warning(

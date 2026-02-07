@@ -75,13 +75,15 @@ def main():
         group_cols=["price", "age", "area", "station_name"]
     )  # grouping処理を行う
 
-    # 緯度・経度を追加してdf_martを作成（Dry runモードでも実行）
-    google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
-    if not google_maps_api_key:
-        logger.warning(
-            "GOOGLE_MAPS_API_KEY environment variable is not set. "
-            "Skipping coordinate geocoding."
-        )
+    # 緯度・経度を追加してdf_martを作成
+    # Dry runモードの場合はスキップ
+    if not args.dry_run:
+        google_maps_api_key = os.environ.get("GOOGLE_MAPS_API_KEY")
+        if not google_maps_api_key:
+            logger.warning(
+                "GOOGLE_MAPS_API_KEY environment variable is not set. "
+                "Skipping coordinate geocoding."
+            )
     else:
         logger.info("Adding coordinates to data...")
         scraper.add_cordinates(google_maps_api_key)

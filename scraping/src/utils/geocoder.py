@@ -34,10 +34,40 @@ def _load_cache() -> Dict[str, Dict[str, float]]:
     try:
         with open(CACHE_FILE_PATH, "r", encoding="utf-8") as f:
             cache = json.load(f)
+
+        # 読み込んだデータの型を検証する
+        if not isinstance(cache, dict):
+            logger.warning(
+                "Cacheファイルの形式が不正です。dict を期待しましたが %s が見つかりました。空のキャッシュにリセットします。",
+                type(cache),
+            )
+            cache = {}
+            # 可能であれば不正なキャッシュを上書きして修正する
+            _save_cache(cache)
             return cache
+
+        # （任意）各エントリが期待される形であるかの簡易チェック
+        valid_cache: Dict[str, Dict[str, float]] = {}
+        for key, value in cache.items():
+            if not isinstance(key, str):
+                continue
+            if not isinstance(value, dict):
+                continue
+            lat = value.get("lat")
+            lon = value.get("lon")
+            if not isinstance(lat, (int, float)) or not isinstance(lon, (int, float)):
+                continue
+            # 型が正しいものだけを残す
+            valid_cache[key] = {"lat": float(lat), "lon": float(lon)}
+
+        return valid_cache
     except json.JSONDecodeError:
+        # JSON として読み取れない場合はキャッシュを無視する
+        logger.warning("Cacheファイルが壊れています。空のキャッシュを使用します。")
         return {}
     except Exception:
+        # 予期せぬエラーの場合もキャッシュなしで継続する
+        logger.error("Cacheファイルの読み込みに失敗しました。空のキャッシュを使用します。", exc_info=True)
         return {}
 
 

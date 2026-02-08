@@ -32,7 +32,23 @@ class GcpSpreadSheet:
             sheet_name (str): 書き込むシート名
         """
         worksheet = self.spreadsheet.worksheet(sheet_name)
-        worksheet.clear()
+        # worksheet.clear()
+
+        # 書式を含めてセルをリセット
+        self.spreadsheet.batch_update(
+            {
+                "requests": [
+                    {
+                        "repeatCell": {
+                            "range": {"sheetId": worksheet.id},
+                            "cell": {},
+                            "fields": "*",
+                        }
+                    }
+                ]
+            }
+        )
+
         set_with_dataframe(
             worksheet,
             df,

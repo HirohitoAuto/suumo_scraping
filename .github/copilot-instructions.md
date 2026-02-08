@@ -1,11 +1,12 @@
 # GitHub Copilot Instructions
 
-## Context Exclusions
+## Context Guidelines
 
-To save tokens and improve performance, the following directories should be excluded from GitHub Copilot's context:
+When providing code suggestions and assistance:
 
-- `scraping/data/` - This directory contains scraped data (CSV files and other data files) that are not needed for code suggestions.
+- Ignore files in the `scraping/data/` directory - this contains scraped data (CSV files and other data files) that are not relevant for code suggestions.
+- Do not include content from `scraping/data/` when analyzing the codebase.
 
 ## Project Overview
 
-This is a SUUMO web scraping project that collects real estate property information. The scraped data is stored in the `scraping/data/` directory but does not need to be analyzed by Copilot for code completion.
+This is a SUUMO web scraping project that collects real estate property information. The scraped data is stored in the `scraping/data/` directory and should not be included in code analysis or suggestions.

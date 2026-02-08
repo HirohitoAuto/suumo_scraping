@@ -32,8 +32,6 @@ class GcpSpreadSheet:
             sheet_name (str): 書き込むシート名
         """
         worksheet = self.spreadsheet.worksheet(sheet_name)
-        # worksheet.clear()
-
         # 書式を含めてセルをリセット
         self.spreadsheet.batch_update(
             {

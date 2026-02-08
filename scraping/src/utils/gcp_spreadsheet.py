@@ -40,7 +40,7 @@ class GcpSpreadSheet:
                         "repeatCell": {
                             "range": {"sheetId": worksheet.id},
                             "cell": {},
-                            "fields": "*",
+                            "fields": "userEnteredValue,userEnteredFormat",
                         }
                     }
                 ]

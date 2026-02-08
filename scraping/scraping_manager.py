@@ -1,4 +1,5 @@
 import os
+import time
 
 import duckdb
 import pandas as pd
@@ -99,6 +100,7 @@ class Scraper:
             if len(data_page) == 0:
                 break
             data_all_pages.extend(data_page)
+            time.sleep(5)
         self.df_lake = pd.DataFrame(data_all_pages)
         logger.info(f"Extracted {len(self.df_lake)} records.")
 

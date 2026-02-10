@@ -51,8 +51,8 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add scraping/data/*.csv
-          git diff --quiet && git diff --staged --quiet || git commit -m "Update CSV data"
+          git add scraping/data/geocoding_api_history.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update geocoding API cache"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

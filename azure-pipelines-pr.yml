@@ -87,7 +87,7 @@ steps:
       )
       try:
           with urllib.request.urlopen(req, timeout=30) as response:
-              if response.status != 200:
+              if not (200 <= response.status < 300):
                   print(f'Teams通知の送信に失敗: {response.status}', file=sys.stderr)
                   sys.exit(1)
       except urllib.error.HTTPError as e:

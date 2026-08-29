@@ -1,0 +1,104 @@
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+
+variables:
+  - group: general
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - script: |
+      python3 - <<'PYEOF'
+      import json
+      import os
+      import sys
+      import urllib.request
+
+      pr_title = os.environ.get('PR_TITLE', '')
+      pr_author = os.environ.get('PR_AUTHOR', '')
+      pr_url = os.environ.get('PR_URL', '')
+      webhook_uri = os.environ.get('TEAMS_BUILD_WEBHOOK_URI', '')
+
+      if not webhook_uri:
+          print('TEAMS_BUILD_WEBHOOK_URI is not set', file=sys.stderr)
+          sys.exit(1)
+
+      payload = {
+          'type': 'message',
+          'attachments': [
+              {
+                  'contentType': 'application/vnd.microsoft.card.adaptive',
+                  'contentUrl': None,
+                  'content': {
+                      'type': 'AdaptiveCard',
+                      '$schema': 'http://adaptivecards.io/schemas/adaptive-card.json',
+                      'version': '1.4',
+                      'body': [
+                          {
+                              'type': 'Container',
+                              'style': 'emphasis',
+                              'items': [
+                                  {
+                                      'type': 'TextBlock',
+                                      'text': '🔀 Pull Request 通知',
+                                      'size': 'Large',
+                                      'weight': 'Bolder',
+                                      'color': 'accent',
+                                      'wrap': True,
+                                  },
+                                  {
+                                      'type': 'TextBlock',
+                                      'text': f'📝 タイトル: {pr_title}',
+                                      'wrap': True,
+                                      'spacing': 'small',
+                                  },
+                                  {
+                                      'type': 'TextBlock',
+                                      'text': f'👤 作成者: {pr_author}',
+                                      'wrap': True,
+                                      'spacing': 'small',
+                                  },
+                                  {
+                                      'type': 'TextBlock',
+                                      'text': f'[🔗 Pull Request を開く]({pr_url})',
+                                      'wrap': True,
+                                      'spacing': 'small',
+                                  },
+                              ],
+                              'spacing': 'medium',
+                          }
+                      ],
+                  },
+              }
+          ],
+      }
+
+      body = json.dumps(payload).encode('utf-8')
+      req = urllib.request.Request(
+          webhook_uri,
+          data=body,
+          headers={'Content-Type': 'application/json'},
+          method='POST',
+      )
+      try:
+          with urllib.request.urlopen(req, timeout=30) as response:
+              if not (200 <= response.status < 300):
+                  print(f'Teams通知の送信に失敗: {response.status}', file=sys.stderr)
+                  sys.exit(1)
+      except urllib.error.HTTPError as e:
+          print(f'Teams通知の送信に失敗: {e.code} {e.reason}', file=sys.stderr)
+          sys.exit(1)
+
+      print('Teams通知を送信しました')
+      PYEOF
+    displayName: 'Send Teams notification for Pull Request'
+    env:
+      PR_TITLE: $(System.PullRequest.Title)
+      PR_AUTHOR: $(Build.RequestedFor)
+      PR_URL: $(System.TeamFoundationCollectionUri)$(System.TeamProject)/_git/$(Build.Repository.Name)/pullrequest/$(System.PullRequest.PullRequestId)
+      TEAMS_BUILD_WEBHOOK_URI: $(TEAMS_BUILD_WEBHOOK_URI)
